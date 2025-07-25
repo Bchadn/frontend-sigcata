@@ -348,93 +348,89 @@ function Peta() {
       .catch((err) => console.error("Gagal memuat Penggunaan Lahan 2025:", err));
   }, []);
 
-// Efek samping untuk mengelola Tileset 3D
+    // Efek samping untuk mengelola Tileset 3D
 useEffect(() => {
   const viewer = viewerRef.current?.cesiumElement;
-  if (!viewer) return; // Pastikan viewer tersedia
+  if (!viewer) return;
 
-  const loadTileset = async () => {
-    try {
-      // Pastikan tileset hanya dimuat sekali
-      if (!tilesetRef.current) {
-        // Memuat 3D Tileset dari URL
-        const tileset = await Cesium.Cesium3DTileset.fromUrl(
-          "https://backend-sigcata-education.up.railway.app/tileset/gedung_a/tileset.json"
-        );
-
-        // Menonaktifkan debug dan wireframe
-        tileset.debugColorizeTiles = false;
-        tileset.enableDebugWireframe = false;
-
-        // Menambahkan tileset ke scene Cesium
-        viewer.scene.primitives.add(tileset);
-        tilesetRef.current = tileset; // Simpan referensi tileset
-
-        // Fokuskan tampilan kamera ke tileset
-        viewer.flyTo(tileset, {
-          duration: 2.5,
-          offset: new Cesium.HeadingPitchRange(
-            Cesium.Math.toRadians(0.0),
-            Cesium.Math.toRadians(-30.0),
-            tileset.boundingSphere.radius * 2.0
-          ),
-        });
-
-        // Setelah tileset dimuat, proses GeoJsonDataSource
-        const geoJsonDataSource = new Cesium.GeoJsonDataSource();
-        await geoJsonDataSource.load(tileset);
-        
-        geoJsonDataSource.entities.values.forEach(entity => {
-          const props = entity.properties;
-          const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi dan membatasi 5 angka dibelakang koma
-          const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Ambil nomor bangunan dari gml:id, hanya ambil bagian setelah garis bawah
-
-          // Set nama entitas dan deskripsi
-          entity.name = `3D Bangunan - ${buildingID}`;
-          entity.description = `
-            <table class="cesium-infoBox-defaultTable">
-              <tbody>
-                <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
-                <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
-              </tbody>
-            </table>`;
-
-          // Menambahkan point graphics jika entitas memiliki posisi
-          if (entity.position) {
-            entity.point = new Cesium.PointGraphics({
-              pixelSize: 10,
-              color: Cesium.Color.RED.withAlpha(0.8),
-              outlineColor: Cesium.Color.WHITE,
-              outlineWidth: 1,
-              heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-            });
-          }
-        });
-
-        // Menambahkan GeoJsonDataSource ke viewer
-        viewer.dataSources.add(geoJsonDataSource);
-      }
-    } catch (error) {
-      console.error("Gagal memuat 3D Tileset:", error);
-      setLayerStates(prev => ({
-        ...prev,
-        buildings: { ...prev.buildings, main: false }, // Nonaktifkan jika gagal
-      }));
-    }
-  };
-
-  // Hanya muat tileset jika layer buildings.main aktif
   if (layerStates.buildings.main) {
-    loadTileset();
+    if (!tilesetRef.current) {
+      const loadTileset = async () => {
+        try {
+          const tileset = await Cesium.Cesium3DTileset.fromUrl(
+            "https://backend-sigcata-education.up.railway.app/tileset/gedung_a/tileset.json"
+          );
+
+          // Menonaktifkan debug dan wireframe
+          tileset.debugColorizeTiles = false;
+          tileset.enableDebugWireframe = false;
+
+          // Menambahkan tileset ke scene
+          viewer.scene.primitives.add(tileset);
+          tilesetRef.current = tileset;
+
+          // Fokuskan tampilan kamera ke tileset
+          viewer.flyTo(tileset, {
+            duration: 2.5,
+            offset: new Cesium.HeadingPitchRange(
+              Cesium.Math.toRadians(0.0),
+              Cesium.Math.toRadians(-30.0),
+              tileset.boundingSphere.radius * 2.0
+            ),
+          });
+
+          // Menambahkan pengaturan nama dan deskripsi entitas
+          tileset.readyPromise.then(() => {
+            tileset._root._content._tiles.forEach(tile => {
+              tile.content._root.children.forEach(entity => {
+                const props = entity.properties;
+                const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi bangunan dan batasi 5 angka desimal
+                const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Ambil nomor bangunan dari gml:id
+
+                // Set nama entitas dan deskripsi
+                entity.name = `3D Bangunan - ${buildingID}`;
+                entity.description = `
+                  <table class="cesium-infoBox-defaultTable">
+                    <tbody>
+                      <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
+                      <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
+                    </tbody>
+                  </table>`;
+
+                // Menambahkan point graphics jika entitas memiliki posisi
+                if (entity.position) {
+                  entity.point = new Cesium.PointGraphics({
+                    pixelSize: 10,
+                    color: Cesium.Color.RED.withAlpha(0.8),
+                    outlineColor: Cesium.Color.WHITE,
+                    outlineWidth: 1,
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                  });
+                }
+              });
+            });
+          });
+        } catch (error) {
+          console.error("Gagal memuat 3D Tileset:", error);
+          setLayerStates(prev => ({
+            ...prev,
+            buildings: {
+              ...prev.buildings,
+              main: false,
+            },
+          }));
+        }
+      };
+      loadTileset();
+    }
   } else {
-    // Hapus tileset jika layer buildings.main dimatikan
     if (tilesetRef.current) {
       viewer.scene.primitives.remove(tilesetRef.current);
-      tilesetRef.current = null; // Reset referensi tileset
+      tilesetRef.current = null;
     }
   }
+}, [layerStates.buildings.main]);
 
-}, [layerStates.buildings.main]); // Trigger efek saat layer berubah
 
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
