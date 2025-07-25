@@ -353,6 +353,43 @@ useEffect(() => {
   const viewer = viewerRef.current?.cesiumElement;
   if (!viewer) return;
 
+  // Mendefinisikan fungsi pendengar untuk entitas yang dipilih
+  const handleEntitySelection = function (selectedEntity) {
+    if (selectedEntity) {
+      // Periksa jika selectedEntity memiliki properti yang dibutuhkan
+      const props = selectedEntity.properties;
+
+      // Mengambil tinggi bangunan dan ID bangunan dari properti
+      const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi dan batasi 5 angka dibelakang koma
+      const buildingID = props?.["gml:id"]?.getValue?.()?.split('_')[1] || 'N/A'; // Ambil nomor bangunan dari gml:id, hanya ambil bagian setelah garis bawah
+
+      // Set nama entitas dan deskripsi
+      selectedEntity.name = `3D Bangunan - ${buildingID}`;
+      selectedEntity.description = ` 
+        <table class="cesium-infoBox-defaultTable">
+          <tbody>
+            <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
+            <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
+          </tbody>
+        </table>`;
+
+      // Menambahkan point graphics jika entitas memiliki posisi
+      if (selectedEntity.position) {
+        selectedEntity.point = new Cesium.PointGraphics({
+          pixelSize: 10,
+          color: Cesium.Color.RED.withAlpha(0.8),
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 1,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+        });
+      }
+    }
+  };
+
+  // Menambahkan event listener untuk selectedEntityChanged
+  viewer.selectedEntityChanged.addEventListener(handleEntitySelection);
+
+  // Hanya muat tileset jika layer buildings.main aktif
   if (layerStates.buildings.main) {
     if (!tilesetRef.current) {
       const loadTileset = async () => {
@@ -376,49 +413,6 @@ useEffect(() => {
             ),
           });
 
-          // Menunggu hingga tileset siap dan memeriksa struktur tileset
-          tileset.readyPromise.then(() => {
-            // Log tileset untuk debugging
-            console.log("Tileset structure:", tileset);
-
-            if (tileset._root && tileset._root._content) {
-              tileset._root._content._tiles.forEach(tile => {
-                if (tile.content && tile.content._root && tile.content._root.children) {
-                  tile.content._root.children.forEach(entity => {
-                    const props = entity.properties;
-
-                    // Mengambil tinggi bangunan dan ID bangunan dari properti
-                    const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi dan batasi 5 angka dibelakang koma
-                    const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Ambil nomor bangunan dari gml:id, hanya ambil bagian setelah garis bawah
-
-                    // Set nama entitas dan deskripsi
-                    entity.name = `3D Bangunan - ${buildingID}`;
-                    entity.description = `
-                      <table class="cesium-infoBox-defaultTable">
-                        <tbody>
-                          <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
-                          <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
-                        </tbody>
-                      </table>`;
-
-                    // Menambahkan point graphics jika entitas memiliki posisi
-                    if (entity.position) {
-                      entity.point = new Cesium.PointGraphics({
-                        pixelSize: 10,
-                        color: Cesium.Color.RED.withAlpha(0.8),
-                        outlineColor: Cesium.Color.WHITE,
-                        outlineWidth: 1,
-                        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-                      });
-                    }
-                  });
-                }
-              });
-            } else {
-              console.error("Tileset structure is incomplete or missing expected properties.");
-            }
-          });
-
         } catch (error) {
           console.error("Gagal memuat 3D Tileset:", error);
           setLayerStates(prev => ({
@@ -430,6 +424,7 @@ useEffect(() => {
           }));
         }
       };
+
       loadTileset();
     }
   } else {
@@ -438,7 +433,13 @@ useEffect(() => {
       tilesetRef.current = null;
     }
   }
+
+  // Membersihkan event listener ketika komponen di-unmount atau dependencies berubah
+  return () => {
+    viewer.selectedEntityChanged.removeEventListener(handleEntitySelection);
+  };
 }, [layerStates.buildings.main]);
+
 
 
 
