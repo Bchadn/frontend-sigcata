@@ -348,7 +348,6 @@ function Peta() {
       .catch((err) => console.error("Gagal memuat Penggunaan Lahan 2025:", err));
   }, []);
 
-    // Efek samping untuk mengelola Tileset 3D
 useEffect(() => {
   const viewer = viewerRef.current?.cesiumElement;
   if (!viewer) return;
@@ -378,37 +377,41 @@ useEffect(() => {
 
           // Menambahkan pengaturan nama dan deskripsi entitas setelah tileset dimuat
           tileset.readyPromise.then(() => {
-            // Mengakses tile dan entitas dalam tileset
-            tileset._root._content._tiles.forEach(tile => {
-              tile.content._root.children.forEach(entity => {
-                const props = entity.properties;
+            // Memastikan tileset sudah terstruktur dengan benar sebelum mengakses
+            if (tileset._root && tileset._root._content) {
+              tileset._root._content._tiles.forEach(tile => {
+                if (tile.content && tile.content._root && tile.content._root.children) {
+                  tile.content._root.children.forEach(entity => {
+                    const props = entity.properties;
 
-                // Mengambil tinggi bangunan dan ID bangunan dari properti
-                const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi dan batasi 5 angka dibelakang koma
-                const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Ambil nomor bangunan dari gml:id, hanya ambil bagian setelah garis bawah
+                    // Mengambil tinggi bangunan dan ID bangunan dari properti
+                    const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi dan batasi 5 angka dibelakang koma
+                    const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Ambil nomor bangunan dari gml:id, hanya ambil bagian setelah garis bawah
 
-                // Set nama entitas dan deskripsi
-                entity.name = `3D Bangunan - ${buildingID}`;
-                entity.description = `
-                  <table class="cesium-infoBox-defaultTable">
-                    <tbody>
-                      <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
-                      <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
-                    </tbody>
-                  </table>`;
+                    // Set nama entitas dan deskripsi
+                    entity.name = `3D Bangunan - ${buildingID}`;
+                    entity.description = `
+                      <table class="cesium-infoBox-defaultTable">
+                        <tbody>
+                          <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
+                          <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
+                        </tbody>
+                      </table>`;
 
-                // Menambahkan point graphics jika entitas memiliki posisi
-                if (entity.position) {
-                  entity.point = new Cesium.PointGraphics({
-                    pixelSize: 10,
-                    color: Cesium.Color.RED.withAlpha(0.8),
-                    outlineColor: Cesium.Color.WHITE,
-                    outlineWidth: 1,
-                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    // Menambahkan point graphics jika entitas memiliki posisi
+                    if (entity.position) {
+                      entity.point = new Cesium.PointGraphics({
+                        pixelSize: 10,
+                        color: Cesium.Color.RED.withAlpha(0.8),
+                        outlineColor: Cesium.Color.WHITE,
+                        outlineWidth: 1,
+                        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                      });
+                    }
                   });
                 }
               });
-            });
+            }
           });
 
         } catch (error) {
@@ -431,6 +434,7 @@ useEffect(() => {
     }
   }
 }, [layerStates.buildings.main]);
+
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
   const getColorByHarga = (Harga) => {
