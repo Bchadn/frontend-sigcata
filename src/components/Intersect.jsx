@@ -115,8 +115,8 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
 
         try {
             // Mengirim permintaan ke backend untuk melakukan query interseksi
-            // Sesuaikan URL endpoint Anda. Contoh: http://localhost:8081/intersect-data
-            const response = await fetch('http://localhost:8081/intersect-data', {
+            // Sesuaikan URL endpoint Anda. Contoh: https://backend-sigcata-education.up.railway.app/intersect-data
+            const response = await fetch('https://backend-sigcata-education.up.railway.app/intersect-data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

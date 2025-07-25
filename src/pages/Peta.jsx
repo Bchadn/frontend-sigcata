@@ -375,6 +375,22 @@ function Peta() {
                 tileset.boundingSphere.radius * 2.0
               ),
             });
+            // Menambahkan event listener untuk entitas yang dipilih
+            viewer.selectedEntityChanged.addEventListener(function (selectedEntity) {
+              if (selectedEntity) {
+                const height = selectedEntity.properties?.Height?.getValue()?.toFixed(5) || 'N/A';
+                const buildingNo = selectedEntity.properties?.["gml:id"]?.getValue()?.split('_')[1] || 'N/A';
+
+                selectedEntity.description = `
+                <table class="cesium-infoBox-defaultTable">
+                  <tbody>
+                    <tr><th>No Bangunan</th><td>Bangunan ${buildingNo}</td></tr>
+                    <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
+                  </tbody>
+                </table>
+              `;
+              }
+            });
           }
           catch (error) {
             console.error("Gagal memuat 3D Tileset:", error);
@@ -707,7 +723,6 @@ function Peta() {
               }}
             />
           )}
-
 
           {/* Render Zona Awal 2025 GeoJSON */}
           {zonaawal2025 && layerStates.znt.zonaawal2025 && (
