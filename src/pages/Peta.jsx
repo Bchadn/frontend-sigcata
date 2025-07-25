@@ -747,7 +747,7 @@ function Peta() {
 
           {layerStates.buildings.main && (
             <GeoJsonDataSource
-              data={tilesetData}  // Data tileset 3D Anda
+              data={tileset}  // Data tileset 3D Anda
               clampToGround={true}
               onLoad={async (ds) => {
                 ds.name = '3D Bangunan'; // Nama entitas
