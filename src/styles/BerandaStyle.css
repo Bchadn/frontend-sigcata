@@ -1,0 +1,152 @@
+:root {
+  --app-primary: #007bff; /* Biru yang lebih cerah, atau bisa #007bff (Blue) */
+  --app-primary-hover: #0056b3;
+  --app-accent: #00bcd4; /* Cyan - Lebih hidup dari Teal sebelumnya */
+  --app-secondary-accent: #6f42c1; /* Ungu - Untuk gradien yang lebih dramatis dan mempesona */
+  --app-white: #ffffff;
+  --app-black: #1a1a1a;
+  --app-gray-dark: #343a40;
+  --app-gray: #6c757d;
+  --app-gray-light: #e9ecef;
+  --app-hover-bg: #e0f7fa; /* Background hover yang lebih lembut sesuai tema baru */
+  --app-active-bg: #007bff;
+  --app-transition: 0.3s ease-in-out;
+  --app-light: #f8f9fa;
+  --app-danger: #dc3545;
+
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .beranda-section-grid {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .beranda-image {
+    max-width: 80%;
+    margin-top: 1rem;
+  }
+}
+
+.beranda-section-grid {
+  display: flex;
+  animation: fadeInUp 1.5s ease-in-out;
+  justify-content: space-between;
+  border-left: 6px solid var(--app-primary);
+  padding: 1rem;
+  border-radius: 16px;
+  max-height: calc(100vh - 165px);
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  font-family: var(--font-family-sans-serif);
+  background: var(--app-light);
+  backdrop-filter: blur(300px);
+  -webkit-animation: fadeInUp 1.5s ease-in-out;
+}
+
+.beranda-left {
+  flex: 1;
+  padding: 1rem;
+}
+
+.beranda-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.beranda-image {
+  width: 500px;
+  height: 400px;
+  border-radius: 16px;
+  object-fit: fill;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  border: 3px solid var(--app-primary);
+  transition: transform 0.3s ease;
+}
+
+.beranda-image:hover {
+  transform: scale(1.01);
+  -webkit-transform: scale(1.01);
+  -moz-transform: scale(1.01);
+  -ms-transform: scale(1.01);
+  -o-transform: scale(1.01);
+}
+
+.judul-deskripsi {
+  font-size: 22px; /* lebih besar dari 32px */
+  font-weight: 1000;
+  font-family: var(--font-family-sans-serif);
+  margin-top: 0%;
+  padding-bottom: 0.5rem;
+  color: var(--app-active-bg);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  transition: color 0.4s ease, transform 0.3s ease;
+  letter-spacing: 1px;
+  transform: scale(1.05);
+}
+
+.judul-deskripsi:hover {
+  color: var(--app-primary-hover);
+}
+
+.deskripsi-beranda {
+  font-size: 14px;
+  color: var(--app-black);
+  line-height: 1.7; /* Jarak antarbaris */
+  letter-spacing: 0.3px; /* Spasi antarhuruf */
+  word-spacing: 1px; /* Spasi antar-kata */
+  width: 800px;
+  max-width: 100%;
+  text-align: justify;
+  margin-bottom: 1.5rem;
+}
+
+.highlight-beranda {
+  background-color: var(--app-primary);
+  color: var(--app-white);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1rem;
+  display: inline-block;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  text-align: center;
+  align-self: center;
+}
+
+.highlight-beranda:hover {
+  background-color: var(--app-primary-hover);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}

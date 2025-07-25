@@ -1,0 +1,318 @@
+/* BandingPetaStyle.css */
+
+/* Variabel CSS Global (Jika Anda memiliki file StyleApp.css, pastikan variabel ini diimpor atau didefinisikan di sana) */
+/* Contoh definisi variabel jika tidak diimpor:
+:root {
+  --app-primary: #1a2a6c;
+  --app-primary-hover: #000428;
+  --app-accent: #b21f1f;
+  --app-secondary-accent: #fdbb2d;
+  --app-white: #ffffff;
+  --app-black: #1a1a1a;
+  --app-gray-dark: #343a40;
+  --app-gray: #6c757d;
+  --app-gray-light: #e9ecef;
+  --app-hover-bg: rgba(255, 255, 255, 0.1);
+  --app-active-bg: #1a2a6c;
+  --app-transition: 0.4s ease-in-out;
+  --app-light: #f8f9fa;
+  --app-danger: #dc3545;
+  --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+*/
+
+/* Kontainer utama untuk peta perbandingan */
+.compare-map-wrapper {
+  position: relative;
+  height: 100%; /* Pastikan ini diatur di komponen induk atau langsung di sini */
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Styling untuk peta kiri dan kanan */
+.left-map,
+.right-map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Wrapper untuk kontrol pilihan layer (Menu Layer Kiri/Kanan) */
+.map-controls-wrapper {
+  display: flex;
+  justify-content: center; /* Memusatkan kolom kontrol */
+  align-items: flex-start; /* Meratakan item ke bagian atas */
+  margin-bottom: 20px;
+  width: 100%;
+  gap: 30px; /* Jarak horizontal antar kolom kontrol */
+  flex-wrap: wrap; /* Mengizinkan wrapping pada layar kecil */
+}
+
+/* Setiap kolom kontrol (untuk pilihan layer kiri dan kanan) */
+.map-control-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px; /* Jarak antara label dan select */
+  padding: 5px 5px; /* Padding di dalam kolom kontrol */
+  border-radius: 10px; /* Sudut membulat */
+  background-color: var(--app-white); /* Latar belakang putih bersih */
+  border: 1px solid var(--app-gray-light); /* Border tipis */
+  flex: 1; /* Mengisi ruang yang tersedia */
+  min-width: 250px; /* Lebar minimum */
+  max-width: 50%; /* Batas lebar maksimum untuk dua kolom */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border-left: 6px solid var(--app-primary);
+  background: var(--app-light);
+  backdrop-filter: blur(300px);
+  animation: fadeInUp 1.5s ease-in-out;
+  -webkit-animation: fadeInUp 1.5s ease-in-out;
+}
+
+/* Efek hover untuk kolom kontrol */
+.map-control-column:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Bayangan lebih intens saat hover */
+  transform: translateY(-2px); /* Sedikit naik saat hover */
+}
+
+/* Styling untuk label dropdown */
+label {
+  font-weight: 700; /* Lebih tebal */
+  color: var(--app-primary); /* Warna dari variabel global */
+  font-size: 20px; /* Ukuran font sedikit lebih besar */
+  margin-bottom: 5px; /* Sedikit jarak dari select */
+  text-align: center;
+  width: 100%; /* Lebar penuh */
+}
+
+/* Styling untuk select dropdown */
+select {
+  padding: 8px 10px; /* Padding lebih besar */
+  border-radius: 6px; /* Sudut lebih membulat */
+  border: 2px solid var(--app-gray); /* Border sedikit lebih tebal */
+  background-color: var(--app-white);
+  color: var(--app-black);
+  font-size: 12px; /* Ukuran font standar */
+  width: 100%; /* Lebar penuh */
+  max-width: 250px; /* Batasi lebar agar tidak terlalu lebar di layar besar */
+  cursor: pointer; /* Menunjukkan bahwa ini adalah elemen interaktif */
+  appearance: none; /* Hapus gaya default panah dropdown browser */
+  -webkit-appearance: none; /* Untuk browser Webkit */
+  -moz-appearance: none; /* Untuk browser Mozilla */
+  /* Panah dropdown kustom menggunakan SVG data URI */
+  background-position: right 10px top 50%;
+  background-size: 12px auto;
+  transition: border-color var(--app-transition),
+    box-shadow var(--app-transition);
+}
+
+/* Efek hover untuk dropdown */
+select:hover {
+  border-color: var(--app-gray-dark); /* Border lebih gelap saat hover */
+}
+
+/* Efek fokus untuk dropdown */
+select:focus {
+  outline: none;
+  border-color: var(--app-primary); /* Border highlight saat fokus */
+  box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.25); /* Shadow lebih jelas saat fokus */
+}
+
+/* Wrapper umum untuk peta dan legenda */
+.map-wrapper {
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Wrapper untuk kedua legenda (kiri dan kanan) */
+.legends-wrapper {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between; /* Menyebar legenda secara horizontal */
+  gap: 10px; /* Jarak antara legenda */
+  pointer-events: none; /* Memungkinkan interaksi dengan elemen di bawah legenda */
+  z-index: 5; /* Pastikan legenda di atas peta */
+}
+
+/* Setiap kolom legenda (untuk legenda kiri dan kanan) */
+.legend-column {
+  background-color: rgba(255, 255, 255, 0.97);
+  /*Sedikitkurangtransparan*/
+  border: 1px solid var(--app-gray-light);
+  border-radius: 8px;
+  /*Sudutyanglebihmembulat*/
+  padding: 5px 5px;
+  /*Paddingyangdiperbesar*/
+  width: 250px;
+  /*Sedikitlebihlebar*/
+  max-height: 200px;
+  /*Tinggimaksimumyangdiperbesar*/
+  overflow-y: auto;
+  font-size: 13px;
+  /*Fontyangsedikitlebihbesar*/
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  /*Bayanganyanglebihmenonjol*/
+  pointer-events: auto;
+  color: var(--app-gray-dark);
+  /* Warna teks default */
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+
+/* Judul legenda */
+.legend-column h5 {
+  margin-top: 0;
+  margin-bottom: 8px; /* Mengurangi margin bawah */
+  color: var(--app-primary); /* Warna judul */
+  font-size: 20px; /* Mengurangi ukuran font */
+  font-weight: bold;
+  text-align: center; /* Tengahkan judul */
+  user-select: none;
+}
+
+/* Daftar legenda */
+.legend-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  user-select: none; /* Mencegah teks terpilih saat diklik/drag */
+}
+
+/* Setiap item dalam daftar legenda */
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px; /* Mengurangi margin bawah */
+  font-size: 0.85rem; /* Mengurangi ukuran font */
+  line-height: 1.2; /* Mengatur ketinggian baris */
+  color: var(--app-black);
+  transition: all var(--app-transition);
+  cursor: default;
+}
+
+/* Hapus margin bawah untuk item legenda terakhir */
+.legend-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Efek hover untuk item legenda */
+.legend-item:hover {
+  background-color: var(--app-gray-light);
+  padding-left: 3px; /* Sedikit indentasi */
+  border-radius: 3px;
+}
+
+/* Efek hover untuk kotak warna di dalam item legenda */
+.legend-item:hover .legend-color-box {
+  transform: scale(1.05); /* Sedikit membesar */
+}
+
+/* Kotak warna dalam legenda */
+.legend-color-box {
+  width: 16px; /* Mengurangi lebar */
+  height: 16px; /* Mengurangi tinggi */
+  margin-right: 8px; /* Mengurangi margin */
+  border: 1px solid var(--app-gray);
+  flex-shrink: 0; /* Mencegah penyusutan */
+  border-radius: 2px; /* Sudut membulat */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Bayangan halus */
+  transition: all var(--app-transition);
+}
+
+/* Penyesuaian Responsif untuk perangkat dengan lebar kurang dari 768px */
+@media (max-width: 768px) {
+  /* Kontrol peta akan ditumpuk secara vertikal */
+  .map-controls-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* Legenda akan ditumpuk secara vertikal dan dipusatkan */
+  .legends-wrapper {
+    flex-direction: column;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 20px);
+    bottom: 10px;
+    gap: 10px;
+  }
+
+  /* Setiap kolom legenda akan mengambil lebih banyak lebar dan ukurannya dikurangi */
+  .legend-column {
+    width: 95%;
+    font-size: 0.8rem;
+    max-height: 150px;
+    padding: 8px;
+  }
+
+  /* Ukuran judul legenda pada perangkat kecil */
+  .legend-column h5 {
+    font-size: 0.9em;
+    margin-bottom: 6px;
+  }
+
+  /* Ukuran item legenda pada perangkat kecil */
+  .legend-item {
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+  }
+
+  /* Ukuran kotak warna legenda pada perangkat kecil */
+  .legend-color-box {
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+  }
+}
+
+/* Styling untuk Popup Info Fitur (ketika mengklik layer) */
+.mapboxgl-popup-content .feature-info-table {
+  width: 100%;
+  border-collapse: collapse; /* Menggabungkan border sel */
+  margin: 0;
+  font-size: 0.9em; /* Ukuran font untuk tabel popup */
+  color: var(--app-black);
+}
+
+/* Styling untuk header tabel dan sel data */
+.mapboxgl-popup-content .feature-info-table th,
+.mapboxgl-popup-content .feature-info-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--app-gray-light); /* Border sel */
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Styling khusus untuk header tabel */
+.mapboxgl-popup-content .feature-info-table th {
+  background-color: var(--app-primary); /* Latar belakang header */
+  color: var(--app-white); /* Warna teks header */
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Styling untuk baris genap (bergantian warna) */
+.mapboxgl-popup-content .feature-info-table tr:nth-child(even) {
+  background-color: var(--app-gray-light);
+}
+
+/* Styling untuk teks tebal (label properti) dalam tabel */
+.mapboxgl-popup-content .feature-info-table b {
+  color: var(--app-gray-dark); /* Warna lebih gelap untuk label properti */
+}
+
+/* Mengatur lebar maksimum popup Mapbox */
+.mapboxgl-popup {
+  max-width: 300px; /* Sesuaikan lebar maksimum popup */
+}

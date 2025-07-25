@@ -1,0 +1,93 @@
+/* StyleApp.css */
+/* Variabel CSS Global (Custom Properties) */
+:root {
+  --app-primary: #007bff; /* Biru yang lebih cerah, atau bisa #007bff (Blue) */
+  --app-primary-hover: #0056b3;
+  --app-accent: #00bcd4; /* Cyan - Lebih hidup dari Teal sebelumnya */
+  --app-secondary-accent: #6f42c1; /* Ungu - Untuk gradien yang lebih dramatis dan mempesona */
+  --app-white: #ffffff;
+  --app-black: #1a1a1a;
+  --app-gray-dark: #343a40;
+  --app-gray: #6c757d;
+  --app-gray-light: #e9ecef;
+  --app-hover-bg: #e0f7fa; /* Background hover yang lebih lembut sesuai tema baru */
+  --app-active-bg: #007bff;
+  --app-transition: 0.3s ease-in-out;
+  --app-light: #f8f9fa;
+  --app-danger: #dc3545;
+
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+/* StyleFooter.css */
+
+/* Hapus seluruh blok :root dari file ini. Variabel global didefinisikan di StyleApp.css */
+
+/* Footer container */
+.sigcata-footer {
+  display: flex;
+  /* Gunakan justify-content dan align-items untuk memusatkan secara horizontal dan vertikal */
+  justify-content: center;
+  align-items: center;
+  /* Gradien yang lebih mempesona (transisi dari biru tua ke merah marun ke emas) */
+  background: linear-gradient(
+    to right,
+    var(--app-primary-hover),
+    /* Dimulai lebih gelap */ var(--app-accent),
+    var(--app-secondary-accent)
+  );
+  color: var(--app-white);
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3); /* Bayangan lebih dramatis */
+  padding: 0.875rem 0rem; /* Padding lebih besar agar footer lebih nyaman */
+  margin-top: auto;
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px; /* Tinggi footer tetap */
+  position: fixed;
+  bottom: 0;
+}
+
+/* Teks copyright di footer */
+.sigcata-footer .footer-text {
+  font-size: 12px;
+  font-weight: 400; /* Sedikit lebih tebal */
+  color: var(--app-white); /* Ubah menjadi putih agar kontras dengan gradien */
+  text-decoration: none;
+  transition: color var(--app-transition), transform var(--app-transition);
+  display: inline-block;
+  letter-spacing: 0.75px; /* Jarak huruf sedikit lebih lebar */
+  text-align: center; /* **Penting: Memusatkan teks secara horizontal** */
+  width: 100%; /* Pastikan elemen ini mengambil lebar penuh jika ingin teksnya benar-benar di tengah dalam flexbox */
+}
+
+/* Efek hover pada teks copyright */
+.sigcata-footer .footer-text:hover {
+  color: var(--app-secondary-accent);
+  /*Warnaemassaathover*/
+  transform: translateY(-0.85px) scale(1.015);
+  -webkit-transform: translateY(-0.85px) scale(1.015);
+  -moz-transform: translateY(-0.85px) scale(1.015);
+  -ms-transform: translateY(-0.85px) scale(1.015);
+  -o-transform: translateY(-0.85px) scale(1.015);
+}
+
+/* Media query untuk responsivitas pada layar kecil */
+@media (max-width: 768px) {
+  .sigcata-footer {
+    padding: 0.75rem 1rem;
+    min-height: 50px;
+  }
+  .sigcata-footer .footer-text {
+    font-size: 13px;
+    text-align: center;
+  }
+}

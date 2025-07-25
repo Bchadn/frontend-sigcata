@@ -1,0 +1,111 @@
+:root {
+  --app-primary: #007bff;
+  --app-primary-hover: #0056b3;
+  --app-accent: #00bcd4;
+  --app-secondary-accent: #6f42c1;
+  --app-white: #ffffff;
+  --app-black: #1a1a1a;
+  --app-gray-dark: #343a40;
+  --app-gray: #6c757d;
+  --app-gray-light: #e9ecef;
+  --app-hover-bg: #e0f7fa;
+  --app-active-bg: #007bff;
+  --app-transition: 0.3s ease-in-out;
+  --app-light: #f8f9fa;
+  --app-danger: #dc3545;
+  --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.tentang-kami-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+  max-height: calc(100vh - 165px);
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  font-family: var(--font-family-sans-serif);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border-left: 6px solid var(--app-primary);
+  background: var(--app-light);
+  backdrop-filter: blur(300px);
+  animation: fadeInUp 1.5s ease-in-out;
+  -webkit-animation: fadeInUp 1.5s ease-in-out;
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.deskripsi-section {
+  font-size: 14px;
+  color: var(--app-black);
+  line-height: 1.7; /* Jarak antarbaris */
+  letter-spacing: 0.3px; /* Spasi antarhuruf */
+  word-spacing: 1px; /* Spasi antar-kata */
+  width: 800px;
+  text-align: justify;
+  margin: 2px 2px 2px 2px;
+  padding: 1rem;
+  font-size: 1rem;
+  color: var(--app-gray-dark);
+}
+
+.deskripsi-text {
+  line-height: 1.8;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.tim-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 2rem;
+  margin: 2px 2px 2px 2px;
+}
+
+.kartu-tim {
+  background: var(--app-white);
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  max-width: 100%;
+  padding: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.kartu-tim:hover {
+  transform: translateY(-5px);
+}
+
+.foto-tim {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--app-primary);
+  margin-bottom: 1rem;
+}
+
+.nama-tim {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--app-black);
+  margin-bottom: 0.5rem;
+}
+
+.deskripsi-tim {
+  font-size: 0.95rem;
+  color: var(--app-gray);
+}

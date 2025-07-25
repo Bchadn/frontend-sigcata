@@ -1,0 +1,134 @@
+/* StyleApp.css */
+/* Variabel CSS Global (Custom Properties) */
+:root {
+  --app-primary: #007bff; /* Biru yang lebih cerah, atau bisa #007bff (Blue) */
+  --app-primary-hover: #0056b3;
+  --app-accent: #00bcd4; /* Cyan - Lebih hidup dari Teal sebelumnya */
+  --app-secondary-accent: #6f42c1; /* Ungu - Untuk gradien yang lebih dramatis dan mempesona */
+  --app-white: #ffffff;
+  --app-black: #1a1a1a;
+  --app-gray-dark: #343a40;
+  --app-gray: #6c757d;
+  --app-gray-light: #e9ecef;
+  --app-hover-bg: #e0f7fa; /* Background hover yang lebih lembut sesuai tema baru */
+  --app-active-bg: #007bff;
+  --app-transition: 0.3s ease-in-out;
+  --app-light: #f8f9fa;
+  --app-danger: #dc3545;
+
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+/* StyleNavbar.css */
+
+/* Hapus seluruh blok :root dari sini. Variabel global didefinisikan di StyleApp.css */
+
+/* Navbar container */
+.sipeta-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Gradien yang serasi dengan footer, arah berlawanan */
+  background: linear-gradient(
+    to left,
+    var(--app-primary),
+    /* Dimulai lebih terang dari primary */ var(--app-secondary-accent),
+    var(--app-accent)
+  );
+  color: var(--app-white); /* Teks putih agar kontras */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Bayangan lebih kuat */
+  padding: 0.7rem 1.5rem;
+  position: fixed;
+  width: 100%;
+}
+
+/* Logo branding */
+.sipeta-brand {
+  font-size: 1.6rem; /* Ukuran sedikit lebih besar */
+  font-weight: bold;
+  color: var(--app-white); /* Logo putih agar kontras */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color var(--app-transition);
+}
+
+.sipeta-brand:hover {
+  color: var(--app-secondary-accent);
+  /*Efekhoverkewarnaemas*/ /*Warnaemassaathover*/
+  transform: translateY(-0.5px) scale(1.1);
+  -webkit-transform: translateY(-0.5px) scale(1.1);
+  -moz-transform: translateY(-0.5px) scale(1.1);
+  -ms-transform: translateY(-0.5px) scale(1.1);
+  -o-transform: translateY(-0.5px) scale(1.1);
+}
+
+/* Navigation */
+.sipeta-nav-items {
+  display: flex;
+  gap: 1.8rem; /* Jarak antar item sedikit lebih lebar */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Nav link style */
+.sipeta-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.6rem 1.2rem; /* Padding lebih besar */
+  font-size: 1.05rem; /* Ukuran teks sedikit lebih besar */
+  font-weight: 500;
+  color: var(--app-white); /* Warna teks link putih */
+  border-radius: 10px; /* Radius lebih melengkung */
+  text-decoration: none;
+  transition: all var(--app-transition);
+  position: relative;
+  background-color: transparent;
+}
+
+/* Hover state */
+.sipeta-nav-link:hover {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.25
+  ); /* Latar belakang transparan saat hover */
+  color: var(--app-white);
+  transform: translateY(-2px); /* Efek naik sedikit */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Active nav item */
+.sipeta-nav-link.active {
+  background-color: var(--app-white);
+  color: var(--app-primary);
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sipeta-nav-items {
+    gap: 0.75rem;
+  }
+
+  .sipeta-nav-link span {
+    display: none;
+  }
+
+  .sipeta-brand span {
+    display: none;
+  }
+}

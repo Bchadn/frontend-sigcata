@@ -1,0 +1,62 @@
+.legendaContainer {
+  position: absolute;
+  top: 200px;
+  right: 20px;
+  bottom: 30px;
+  width: 200px;
+  min-width: 80px;
+  background-color: var(--app-white);
+  padding: 16px 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  font-family: var(--font-family-sans-serif);
+  max-height: calc(100vh - 250px);
+  overflow: auto;
+  font-size: 12px;
+  color: var(--app-gray-dark);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+
+.legendaBox {
+  background: white;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 0; /* Sesuaikan jika ada lebih dari satu legenda box dan perlu jarak antar mereka */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.legendaBoxTitle {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+  text-align: center; /* Tambahkan ini untuk meratakan judul ke tengah */
+}
+
+.legendaList {
+  list-style: none;
+  padding: 0;
+  margin-top: 8px;
+}
+
+.legendaListItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.legendaColorBox {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #999;
+  margin-right: 8px;
+}
+
+.legendaLabel {
+  flex: 1;
+  font-size: 13px;
+  color: #333;
+}

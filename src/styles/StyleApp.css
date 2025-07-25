@@ -1,0 +1,247 @@
+/* StyleApp.css */
+/* Variabel CSS Global (Custom Properties) */
+:root {
+  --app-primary: #007bff; /* Biru yang lebih cerah, atau bisa #007bff (Blue) */
+  --app-primary-hover: #0056b3;
+  --app-accent: #00bcd4; /* Cyan - Lebih hidup dari Teal sebelumnya */
+  --app-secondary-accent: #6f42c1; /* Ungu - Untuk gradien yang lebih dramatis dan mempesona */
+  --app-white: #ffffff;
+  --app-black: #1a1a1a;
+  --app-gray-dark: #343a40;
+  --app-gray: #6c757d;
+  --app-gray-light: #e9ecef;
+  --app-hover-bg: #e0f7fa; /* Background hover yang lebih lembut sesuai tema baru */
+  --app-active-bg: #007bff;
+  --app-transition: 0.3s ease-in-out;
+  --app-light: #f8f9fa;
+  --app-danger: #dc3545;
+
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+/* Aturan Reset dan Box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+/* Pengaturan Dasar HTML dan Body untuk Sticky Footer */
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position: relative;
+}
+
+body {
+  font-family: var(--font-family-sans-serif);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--app-gray-dark);
+  text-align: left;
+  background-color: var(--app-white);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Elemen Block HTML5 */
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+  display: block;
+}
+
+/* Pengaturan Teks Umum */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--app-black);
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--app-primary);
+  text-decoration: none;
+  background-color: transparent;
+  transition: color var(--app-transition);
+}
+
+a:hover {
+  color: var(--app-primary-hover);
+  text-decoration: underline;
+}
+
+/* Grid System (Bootstrap-like) */
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  width: 100%;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -0.75rem;
+  margin-left: -0.75rem;
+}
+
+.col,
+[class*="col-"] {
+  position: relative;
+  width: 100%;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+/* Tombol (Button) Styling */
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  color: var(--app-gray-dark);
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.35rem;
+  transition: all var(--app-transition);
+}
+
+.btn-primary {
+  color: var(--app-white);
+  background-color: var(--app-primary);
+  border-color: var(--app-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--app-primary-hover);
+  border-color: var(--app-primary-hover);
+}
+
+/* Card Styling */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: var(--app-white);
+  background-clip: border-box;
+  border: 1px solid var(--app-gray-light);
+  border-radius: 0.35rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all var(--app-transition);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+
+/* Teks isian */
+/* =================== */
+/* Teks & Layout Umum  */
+/* =================== */
+.beranda-container {
+  padding: 60px 5px 45px 5px;
+  background-color: var(--app-light);
+  font-family: var(--font-family-sans-serif);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.judul {
+  font-size: 28px;
+  margin-bottom: 0px;
+  font-weight: 800;
+  text-decoration: none;
+  text-align: left;
+  letter-spacing: 1px;
+  /*Lebihhalus*/ /*Efekglowmenggunakanmultipleshadowdenganwarnaprimary*/
+  background: linear-gradient(
+    90deg,
+    var(--app-primary),
+    var(--app-secondary-accent)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  /*Kompatibilitaslintasbrowser*/
+  -webkit-text-fill-color: transparent;
+}
+
+.judul:hover {
+  color: var(--app-primary-hover);
+}
+
+/* =================== */
+/* Map Container */
+/* Mengubah tinggi map-container agar mengisi ruang yang tersedia di dalam beranda-container */
+.map-container {
+  position: relative;
+  flex-grow: 1;
+  overflow: hidden;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  background: var(--app-white); /* Menggunakan variabel warna */
+}

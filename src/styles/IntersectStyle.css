@@ -1,0 +1,284 @@
+/*
+ * IntersectStyle.css
+ */
+
+:root {
+  --app-primary: #007bff;
+  --app-primary-hover: #0056b3;
+  --app-accent: #00bcd4;
+  --app-secondary-accent: #6f42c1;
+  --app-white: #ffffff;
+  --app-black: #1a1a1a;
+  --app-gray-dark: #343a40;
+  --app-gray: #6c757d;
+  --app-gray-light: #e9ecef;
+  --app-hover-bg: #e0f7fa;
+  --app-active-bg: #007bff;
+  --app-transition: 0.3s ease-in-out;
+  --app-light: #f8f9fa;
+  --app-danger: #dc3545;
+
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: "Nunito", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Panel Intersect */
+.intersect-panel {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 300px;
+  min-width: 180px;
+  background-color: var(--app-white);
+  padding: 16px 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  font-family: var(--font-family-sans-serif);
+  max-height: calc(100vh - 250px);
+  overflow: auto;
+  font-size: 14px;
+  color: var(--app-gray-dark);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+
+/* Header Panel */
+.intersect-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--app-gray-light);
+}
+
+.intersect-header h3 {
+  margin: 0;
+  font-size: 14px; /* disamakan dengan FilterStyle.css */
+  color: var(--app-gray-dark);
+  font-weight: bold;
+}
+
+.intersect-header .close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--app-gray);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color var(--app-transition);
+}
+
+.intersect-header .close-btn:hover {
+  color: var(--app-danger);
+  transform: rotate(90deg);
+}
+
+/* Section */
+.filter-section {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--app-gray);
+}
+
+.filter-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.filter-section label,
+.radio-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px; /* disamakan */
+  font-size: 12px; /* disamakan */
+  font-weight: normal;
+  color: var(--app-gray-dark);
+  cursor: pointer;
+}
+
+.filter-section select,
+.filter-section input[type="number"] {
+  width: 100%;
+  padding: 5px 7px;
+  margin-top: 4px;
+  border: 1px solid var(--app-gray);
+  border-radius: 4px;
+  font-size: 0.8em;
+  color: var(--app-black);
+  background-color: var(--app-white);
+  box-sizing: border-box;
+  transition: border-color var(--app-transition),
+    box-shadow var(--app-transition);
+}
+
+.filter-section select:focus,
+.filter-section input[type="number"]:focus {
+  border-color: var(--app-primary);
+  box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+.filter-section select:disabled,
+.filter-section input[type="number"]:disabled {
+  background-color: var(--app-gray-light);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Radio Group */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 6px;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--app-gray);
+  border-radius: 50%;
+  background-color: var(--app-light);
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.radio-group input[type="radio"]:checked::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--app-primary);
+}
+
+/* Tombol Aksi */
+.intersect-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--app-gray-light);
+}
+
+.intersect-actions button {
+  padding: 7px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.8em;
+  transition: background-color var(--app-transition), transform 0.1s ease;
+  flex: 1;
+}
+
+.reset-button {
+  background-color: var(--app-gray);
+  color: var(--app-white);
+}
+
+.reset-button:hover {
+  background-color: var(--app-gray-dark);
+  transform: translateY(-1px);
+}
+
+.apply-button {
+  background-color: var(--app-primary);
+  color: var(--app-white);
+}
+
+.apply-button:hover {
+  background-color: var(--app-primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Responsif */
+@media (max-width: var(--breakpoint-sm)) {
+  .intersect-panel {
+    top: 60px;
+    right: 5px;
+    width: calc(100% - 20px);
+    max-height: calc(100vh - 120px);
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .intersect-header h3 {
+    font-size: 0.9em;
+  }
+
+  .intersect-header .close-btn {
+    font-size: 16px;
+  }
+
+  .filter-section label {
+    font-size: 12px; /* disamakan */
+  }
+
+  .filter-section select,
+  .filter-section input[type="number"] {
+    font-size: 0.75em;
+    padding: 4px 6px;
+  }
+
+  .radio-group label {
+    font-size: 12px; /* disamakan */
+  }
+
+  .radio-group input[type="radio"] {
+    width: 13px;
+    height: 13px;
+  }
+
+  .radio-group input[type="radio"]:checked::before {
+    width: 6px;
+    height: 6px;
+  }
+
+  .intersect-actions button {
+    font-size: 0.75em;
+    padding: 6px 10px;
+  }
+}
+
+/* Utility */
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+.loading-indicator {
+  text-align: center;
+  margin-top: 10px;
+  color: var(--app-gray);
+  font-size: 0.8em;
+}
+
+.loading-indicator::before {
+  content: "⏳ ";
+}

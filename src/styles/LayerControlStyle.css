@@ -1,0 +1,50 @@
+.layer-control {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 12px 16px;
+  border-radius: 8px;
+  z-index: 999;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  min-width: 180px;
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+}
+
+.layer-control .layer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.layer-control .close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #444;
+}
+
+.layer-control .layer-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.layer-control .layer-item {
+  margin: 6px 0;
+}
+
+.layer-control .layer-item label {
+  display: flex;
+  text-align: left;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  font-weight: normal; /* Atur ke nilai default atau yang Anda inginkan */
+  color: #333; /* Atur warna yang Anda inginkan */
+  font-size: 14px;
+}
