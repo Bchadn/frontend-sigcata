@@ -357,6 +357,7 @@ useEffect(() => {
     try {
       // Pastikan tileset hanya dimuat sekali
       if (!tilesetRef.current) {
+        // Memuat 3D Tileset dari URL
         const tileset = await Cesium.Cesium3DTileset.fromUrl(
           "https://backend-sigcata-education.up.railway.app/tileset/gedung_a/tileset.json"
         );
@@ -378,6 +379,40 @@ useEffect(() => {
             tileset.boundingSphere.radius * 2.0
           ),
         });
+
+        // Setelah tileset dimuat, proses GeoJsonDataSource
+        const geoJsonDataSource = new Cesium.GeoJsonDataSource();
+        await geoJsonDataSource.load(tileset);
+        
+        geoJsonDataSource.entities.values.forEach(entity => {
+          const props = entity.properties;
+          const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi dan membatasi 5 angka dibelakang koma
+          const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Ambil nomor bangunan dari gml:id, hanya ambil bagian setelah garis bawah
+
+          // Set nama entitas dan deskripsi
+          entity.name = `3D Bangunan - ${buildingID}`;
+          entity.description = `
+            <table class="cesium-infoBox-defaultTable">
+              <tbody>
+                <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
+                <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
+              </tbody>
+            </table>`;
+
+          // Menambahkan point graphics jika entitas memiliki posisi
+          if (entity.position) {
+            entity.point = new Cesium.PointGraphics({
+              pixelSize: 10,
+              color: Cesium.Color.RED.withAlpha(0.8),
+              outlineColor: Cesium.Color.WHITE,
+              outlineWidth: 1,
+              heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+            });
+          }
+        });
+
+        // Menambahkan GeoJsonDataSource ke viewer
+        viewer.dataSources.add(geoJsonDataSource);
       }
     } catch (error) {
       console.error("Gagal memuat 3D Tileset:", error);
@@ -400,6 +435,7 @@ useEffect(() => {
   }
 
 }, [layerStates.buildings.main]); // Trigger efek saat layer berubah
+
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
   const getColorByHarga = (Harga) => {
@@ -748,48 +784,6 @@ useEffect(() => {
               }}
             />
           )}
-
-          // Render GeoJsonDataSource hanya jika tileset dimuat
-{layerStates.buildings.main && (
-  <GeoJsonDataSource
-    data={tilesetRef.current} // Pastikan tileset sudah dimuat
-    clampToGround={true}
-    onLoad={async (ds) => {
-      ds.name = '3D Bangunan'; // Nama entitas
-      const viewer = viewerRef.current?.cesiumElement;
-      if (viewer) {
-        viewer.flyTo(ds, { duration: 2.5 }); // Fokuskan kamera ke entitas
-      }
-
-      ds.entities.values.forEach(entity => {
-        const props = entity.properties;
-        const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi
-        const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Ambil ID bangunan
-
-        // Set nama entitas dan deskripsi
-        entity.name = `3D Bangunan - ${buildingID}`;
-        entity.description = `
-          <table class="cesium-infoBox-defaultTable">
-            <tbody>
-              <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
-              <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
-            </tbody>
-          </table>`;
-
-        // Menambahkan point graphics jika entitas memiliki posisi
-        if (entity.position) {
-          entity.point = new Cesium.PointGraphics({
-            pixelSize: 10,
-            color: Cesium.Color.RED.withAlpha(0.8),
-            outlineColor: Cesium.Color.WHITE,
-            outlineWidth: 1,
-            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-          });
-        }
-      });
-    }}
-  />
-)}
 
           {/* Render ZNT 2019 GeoJSON */}
           {renderableZnt2019 && (
