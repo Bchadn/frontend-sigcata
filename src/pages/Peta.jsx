@@ -375,22 +375,6 @@ function Peta() {
                 tileset.boundingSphere.radius * 2.0
               ),
             });
-            // Menambahkan event listener untuk entitas yang dipilih
-            viewer.selectedEntityChanged.addEventListener(function (selectedEntity) {
-              if (selectedEntity) {
-                const height = selectedEntity.properties?.Height?.getValue()?.toFixed(5) || 'N/A';
-                const buildingNo = selectedEntity.properties?.["gml:id"]?.getValue()?.split('_')[1] || 'N/A';
-
-                selectedEntity.description = `
-                <table class="cesium-infoBox-defaultTable">
-                  <tbody>
-                    <tr><th>No Bangunan</th><td>Bangunan ${buildingNo}</td></tr>
-                    <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
-                  </tbody>
-                </table>
-              `;
-              }
-            });
           }
           catch (error) {
             console.error("Gagal memuat 3D Tileset:", error);
@@ -761,8 +745,39 @@ function Peta() {
             />
           )}
 
+          {layerStates.buildings.main && (
+            <GeoJsonDataSource
+              data={tilesetData}  // Data tileset 3D Anda
+              clampToGround={true}
+              onLoad={async (ds) => {
+                ds.name = '3D Bangunan'; // Nama entitas
+                const viewer = viewerRef.current?.cesiumElement;
+                if (viewer) {
+                  viewer.flyTo(ds, { duration: 2.5 });
+                }
 
+                ds.entities.values.forEach(entity => {
+                  const props = entity.properties;
 
+                  // Mengambil tinggi dan ID bangunan dari properti
+                  const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Mengambil tinggi dan membatasi 5 angka dibelakang koma
+                  const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Mengambil nomor bangunan dari gml:id
+
+                  // Mengatur nama entitas
+                  entity.name = `3D Bangunan - ${buildingID}`;
+
+                  // Mengatur deskripsi
+                  entity.description = `
+          <table class="cesium-infoBox-defaultTable">
+            <tbody>
+              <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
+              <tr><th>Tinggi Bangunan</th><td>${height} m</td></tr>
+            </tbody>
+          </table>`;
+                });
+              }}
+            />
+          )}
 
           {/* Render ZNT 2019 GeoJSON */}
           {renderableZnt2019 && (
