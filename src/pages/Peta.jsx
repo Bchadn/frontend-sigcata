@@ -348,6 +348,7 @@ function Peta() {
       .catch((err) => console.error("Gagal memuat Penggunaan Lahan 2025:", err));
   }, []);
 
+  // Efek samping untuk mengelola Tileset 3D
 useEffect(() => {
   const viewer = viewerRef.current?.cesiumElement;
   if (!viewer) return;
@@ -375,9 +376,11 @@ useEffect(() => {
             ),
           });
 
-          // Menambahkan pengaturan nama dan deskripsi entitas setelah tileset dimuat
+          // Menunggu hingga tileset siap dan memeriksa struktur tileset
           tileset.readyPromise.then(() => {
-            // Memastikan tileset sudah terstruktur dengan benar sebelum mengakses
+            // Log tileset untuk debugging
+            console.log("Tileset structure:", tileset);
+
             if (tileset._root && tileset._root._content) {
               tileset._root._content._tiles.forEach(tile => {
                 if (tile.content && tile.content._root && tile.content._root.children) {
@@ -411,6 +414,8 @@ useEffect(() => {
                   });
                 }
               });
+            } else {
+              console.error("Tileset structure is incomplete or missing expected properties.");
             }
           });
 
@@ -434,6 +439,7 @@ useEffect(() => {
     }
   }
 }, [layerStates.buildings.main]);
+
 
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
