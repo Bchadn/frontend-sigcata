@@ -349,37 +349,45 @@ function Peta() {
   }, []);
 
   // Efek samping untuk mengelola Tileset 3D
-const handleEntitySelection = function (selectedEntity) {
-  if (selectedEntity) {
-    // Periksa jika selectedEntity memiliki properti yang dibutuhkan
-    const props = selectedEntity.properties;
+useEffect(() => {
+  const viewer = viewerRef.current?.cesiumElement;
+  if (!viewer) return;
 
-    // Ambil tinggi bangunan dan ID bangunan dari properti, dengan pengecekan yang lebih baik
-    const height = props?.Height?.getValue?.()?.toFixed(5) || 'Tidak Tersedia'; 
-    const buildingID = props?.["gml:id"]?.getValue?.()?.split('_')[1] || 'Tidak Tersedia'; 
+  // Mendefinisikan fungsi pendengar untuk entitas yang dipilih
+  const handleEntitySelection = function (selectedEntity) {
+    if (selectedEntity) {
+      // Periksa jika selectedEntity memiliki properti yang dibutuhkan
+      const props = selectedEntity.properties;
 
-    // Set nama entitas dan deskripsi
-    selectedEntity.name = `3D Bangunan - ${buildingID}`;
-    selectedEntity.description = ` 
-      <table class="cesium-infoBox-defaultTable">
-        <tbody>
-          <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
-          <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
-        </tbody>
-      </table>`;
+      // Mengambil tinggi bangunan dan ID bangunan dari properti
+      const height = props?.Height?.getValue?.()?.toFixed(5) || 'Tidak Tersedia'; // Ambil tinggi dan batasi 5 angka dibelakang koma
+      const buildingID = props?.["gml:id"]?.getValue?.()?.split('_')[1] || 'Tidak Tersedia'; // Ambil nomor bangunan dari gml:id, hanya ambil bagian setelah garis bawah
 
-    // Menambahkan point graphics jika entitas memiliki posisi
-    if (selectedEntity.position) {
-      selectedEntity.point = new Cesium.PointGraphics({
-        pixelSize: 10,
-        color: Cesium.Color.RED.withAlpha(0.8),
-        outlineColor: Cesium.Color.WHITE,
-        outlineWidth: 1,
-        heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-      });
+      // Set nama entitas dan deskripsi
+      selectedEntity.name = `3D Bangunan - ${buildingID}`;
+      selectedEntity.description = ` 
+        <table class="cesium-infoBox-defaultTable">
+          <tbody>
+            <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
+            <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
+          </tbody>
+        </table>`;
+
+      // Menambahkan point graphics jika entitas memiliki posisi
+      if (selectedEntity.position) {
+        selectedEntity.point = new Cesium.PointGraphics({
+          pixelSize: 10,
+          color: Cesium.Color.RED.withAlpha(0.8),
+          outlineColor: Cesium.Color.WHITE,
+          outlineWidth: 1,
+          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+        });
+      }
     }
-  }
-};
+  };
+
+  // Menambahkan event listener untuk selectedEntityChanged
+  viewer.selectedEntityChanged.addEventListener(handleEntitySelection);
 
   // Hanya muat tileset jika layer buildings.main aktif
   if (layerStates.buildings.main) {
@@ -431,9 +439,6 @@ const handleEntitySelection = function (selectedEntity) {
     viewer.selectedEntityChanged.removeEventListener(handleEntitySelection);
   };
 }, [layerStates.buildings.main]);
-
-
-
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
   const getColorByHarga = (Harga) => {
