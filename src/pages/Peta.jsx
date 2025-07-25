@@ -353,6 +353,49 @@ function Peta() {
     const viewer = viewerRef.current?.cesiumElement;
     if (!viewer) return;
 
+    let handler;
+
+    // Fungsi untuk menangani klik pada bangunan (3D Tiles)
+    const setupClickHandler = () => {
+      handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+
+      handler.setInputAction((movement) => {
+        const pickedFeature = viewer.scene.pick(movement.position);
+
+        if (!Cesium.defined(pickedFeature) || typeof pickedFeature.getProperty !== "function") {
+          console.warn("Tidak ada feature yang valid diklik.");
+          return;
+        }
+
+        // Ambil properti dari fitur
+        const gmlId = pickedFeature.getProperty("gml:id") || "Tidak Tersedia";
+        const buildingID = gmlId.split('_')[1] || gmlId;
+        const heightRaw = pickedFeature.getProperty("Height");
+        const height = typeof heightRaw === "number" ? heightRaw.toFixed(5) : "Tidak Tersedia";
+
+        // Buat entitas terpilih dengan deskripsi
+        viewer.selectedEntity = new Cesium.Entity({
+          name: `3D Bangunan - ${buildingID}`,
+          description: `
+          <table class="cesium-infoBox-defaultTable">
+            <tbody>
+              <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
+              <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
+            </tbody>
+          </table>`,
+          position: pickedFeature.boundingSphere?.center,
+          point: new Cesium.PointGraphics({
+            pixelSize: 10,
+            color: Cesium.Color.RED.withAlpha(0.8),
+            outlineColor: Cesium.Color.WHITE,
+            outlineWidth: 1,
+            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+          }),
+        });
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    };
+
+    // Muat Tileset jika diaktifkan
     if (layerStates.buildings.main) {
       if (!tilesetRef.current) {
         const loadTileset = async () => {
@@ -360,9 +403,6 @@ function Peta() {
             const tileset = await Cesium.Cesium3DTileset.fromUrl(
               "https://backend-sigcata-education.up.railway.app/tileset/gedung_a/tileset.json"
             );
-
-            tileset.debugColorizeTiles = false;
-            tileset.enableDebugWireframe = false;
 
             viewer.scene.primitives.add(tileset);
             tilesetRef.current = tileset;
@@ -375,24 +415,10 @@ function Peta() {
                 tileset.boundingSphere.radius * 2.0
               ),
             });
-            // Menambahkan event listener untuk entitas yang dipilih
-            viewer.selectedEntityChanged.addEventListener(function (selectedEntity) {
-              if (selectedEntity) {
-                const height = selectedEntity.properties?.Height?.getValue()?.toFixed(5) || 'N/A';
-                const buildingNo = selectedEntity.properties?.["gml:id"]?.getValue()?.split('_')[1] || 'N/A';
 
-                selectedEntity.description = `
-                <table class="cesium-infoBox-defaultTable">
-                  <tbody>
-                    <tr><th>No Bangunan</th><td>Bangunan ${buildingNo}</td></tr>
-                    <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
-                  </tbody>
-                </table>
-              `;
-              }
-            });
-          }
-          catch (error) {
+            // Setup handler setelah tileset berhasil dimuat
+            setupClickHandler();
+          } catch (error) {
             console.error("Gagal memuat 3D Tileset:", error);
             setLayerStates(prev => ({
               ...prev,
@@ -403,14 +429,28 @@ function Peta() {
             }));
           }
         };
+
         loadTileset();
+      } else {
+        setupClickHandler();
       }
     } else {
+      // Hapus tileset dan handler jika layer dinonaktifkan
       if (tilesetRef.current) {
         viewer.scene.primitives.remove(tilesetRef.current);
         tilesetRef.current = null;
       }
+      if (handler) {
+        handler.destroy();
+      }
     }
+
+    // Cleanup handler saat komponen unmount atau berubah
+    return () => {
+      if (handler) {
+        handler.destroy();
+      }
+    };
   }, [layerStates.buildings.main]);
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
@@ -760,9 +800,6 @@ function Peta() {
               }}
             />
           )}
-
-
-
 
           {/* Render ZNT 2019 GeoJSON */}
           {renderableZnt2019 && (
