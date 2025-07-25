@@ -353,43 +353,49 @@ useEffect(() => {
   const viewer = viewerRef.current?.cesiumElement;
   if (!viewer) return;
 
-  // Mendefinisikan fungsi pendengar untuk entitas yang dipilih
-  const handleEntitySelection = function (selectedEntity) {
-    if (selectedEntity) {
-      // Periksa jika selectedEntity memiliki properti yang dibutuhkan
-      const props = selectedEntity.properties;
+  let handler;
 
-      // Mengambil tinggi bangunan dan ID bangunan dari properti
-      const height = props?.Height?.getValue?.()?.toFixed(5) || 'Tidak Tersedia'; // Ambil tinggi dan batasi 5 angka dibelakang koma
-      const buildingID = props?.["gml:id"]?.getValue?.()?.split('_')[1] || 'Tidak Tersedia'; // Ambil nomor bangunan dari gml:id, hanya ambil bagian setelah garis bawah
+  // Fungsi untuk menangani klik pada bangunan (3D Tiles)
+  const setupClickHandler = () => {
+    handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
-      // Set nama entitas dan deskripsi
-      selectedEntity.name = `3D Bangunan - ${buildingID}`;
-      selectedEntity.description = ` 
-        <table class="cesium-infoBox-defaultTable">
-          <tbody>
-            <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
-            <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
-          </tbody>
-        </table>`;
+    handler.setInputAction((movement) => {
+      const pickedFeature = viewer.scene.pick(movement.position);
 
-      // Menambahkan point graphics jika entitas memiliki posisi
-      if (selectedEntity.position) {
-        selectedEntity.point = new Cesium.PointGraphics({
+      if (!Cesium.defined(pickedFeature) || typeof pickedFeature.getProperty !== "function") {
+        console.warn("Tidak ada feature yang valid diklik.");
+        return;
+      }
+
+      // Ambil properti dari fitur
+      const gmlId = pickedFeature.getProperty("gml:id") || "Tidak Tersedia";
+      const buildingID = gmlId.split('_')[1] || gmlId;
+      const heightRaw = pickedFeature.getProperty("Height");
+      const height = typeof heightRaw === "number" ? heightRaw.toFixed(5) : "Tidak Tersedia";
+
+      // Buat entitas terpilih dengan deskripsi
+      viewer.selectedEntity = new Cesium.Entity({
+        name: `3D Bangunan - ${buildingID}`,
+        description: `
+          <table class="cesium-infoBox-defaultTable">
+            <tbody>
+              <tr><th>No Bangunan</th><td>${buildingID}</td></tr>
+              <tr><th>Tinggi Bangunan (m)</th><td>${height} m</td></tr>
+            </tbody>
+          </table>`,
+        position: pickedFeature.boundingSphere?.center,
+        point: new Cesium.PointGraphics({
           pixelSize: 10,
           color: Cesium.Color.RED.withAlpha(0.8),
           outlineColor: Cesium.Color.WHITE,
           outlineWidth: 1,
           heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-        });
-      }
-    }
+        }),
+      });
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   };
 
-  // Menambahkan event listener untuk selectedEntityChanged
-  viewer.selectedEntityChanged.addEventListener(handleEntitySelection);
-
-  // Hanya muat tileset jika layer buildings.main aktif
+  // Muat Tileset jika diaktifkan
   if (layerStates.buildings.main) {
     if (!tilesetRef.current) {
       const loadTileset = async () => {
@@ -397,9 +403,6 @@ useEffect(() => {
           const tileset = await Cesium.Cesium3DTileset.fromUrl(
             "https://backend-sigcata-education.up.railway.app/tileset/gedung_a/tileset.json"
           );
-
-          tileset.debugColorizeTiles = false;
-          tileset.enableDebugWireframe = false;
 
           viewer.scene.primitives.add(tileset);
           tilesetRef.current = tileset;
@@ -413,6 +416,8 @@ useEffect(() => {
             ),
           });
 
+          // Setup handler setelah tileset berhasil dimuat
+          setupClickHandler();
         } catch (error) {
           console.error("Gagal memuat 3D Tileset:", error);
           setLayerStates(prev => ({
@@ -426,17 +431,25 @@ useEffect(() => {
       };
 
       loadTileset();
+    } else {
+      setupClickHandler();
     }
   } else {
+    // Hapus tileset dan handler jika layer dinonaktifkan
     if (tilesetRef.current) {
       viewer.scene.primitives.remove(tilesetRef.current);
       tilesetRef.current = null;
     }
+    if (handler) {
+      handler.destroy();
+    }
   }
 
-  // Membersihkan event listener ketika komponen di-unmount atau dependencies berubah
+  // Cleanup handler saat komponen unmount atau berubah
   return () => {
-    viewer.selectedEntityChanged.removeEventListener(handleEntitySelection);
+    if (handler) {
+      handler.destroy();
+    }
   };
 }, [layerStates.buildings.main]);
 
