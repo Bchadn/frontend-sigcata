@@ -361,15 +361,12 @@ useEffect(() => {
             "https://backend-sigcata-education.up.railway.app/tileset/gedung_a/tileset.json"
           );
 
-          // Menonaktifkan debug dan wireframe
           tileset.debugColorizeTiles = false;
           tileset.enableDebugWireframe = false;
 
-          // Menambahkan tileset ke scene
           viewer.scene.primitives.add(tileset);
           tilesetRef.current = tileset;
 
-          // Fokuskan tampilan kamera ke tileset
           viewer.flyTo(tileset, {
             duration: 2.5,
             offset: new Cesium.HeadingPitchRange(
@@ -379,13 +376,16 @@ useEffect(() => {
             ),
           });
 
-          // Menambahkan pengaturan nama dan deskripsi entitas
+          // Menambahkan pengaturan nama dan deskripsi entitas setelah tileset dimuat
           tileset.readyPromise.then(() => {
+            // Mengakses tile dan entitas dalam tileset
             tileset._root._content._tiles.forEach(tile => {
               tile.content._root.children.forEach(entity => {
                 const props = entity.properties;
-                const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi bangunan dan batasi 5 angka desimal
-                const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Ambil nomor bangunan dari gml:id
+
+                // Mengambil tinggi bangunan dan ID bangunan dari properti
+                const height = props?.Height?.getValue?.()?.toFixed(5) || 'N/A'; // Ambil tinggi dan batasi 5 angka dibelakang koma
+                const buildingID = props?.["gml:id"]?.getValue?.()?.split("_")[1] || 'N/A'; // Ambil nomor bangunan dari gml:id, hanya ambil bagian setelah garis bawah
 
                 // Set nama entitas dan deskripsi
                 entity.name = `3D Bangunan - ${buildingID}`;
@@ -410,6 +410,7 @@ useEffect(() => {
               });
             });
           });
+
         } catch (error) {
           console.error("Gagal memuat 3D Tileset:", error);
           setLayerStates(prev => ({
@@ -430,8 +431,6 @@ useEffect(() => {
     }
   }
 }, [layerStates.buildings.main]);
-
-
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
   const getColorByHarga = (Harga) => {
