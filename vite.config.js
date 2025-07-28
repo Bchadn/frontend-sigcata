@@ -6,7 +6,7 @@ import rollupNodePolyfills from 'rollup-plugin-node-polyfills';
 
 export default defineConfig({
   plugins: [react(), cesium()],
-  base: './',
+  base: '/',
   define: {
     CESIUM_BASE_URL: JSON.stringify('/cesium')
   },
