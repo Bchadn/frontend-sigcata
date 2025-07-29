@@ -234,8 +234,10 @@ select:focus {
     border: 1px solid var(--app-gray-light);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     pointer-events: auto;
-    touch-action: none;
-    cursor: move;
+    touch-action: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    cursor: grab;
   }
 
   /* Judul legenda */
