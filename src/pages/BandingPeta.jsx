@@ -3,11 +3,11 @@ import mapboxgl from 'mapbox-gl';
 import MapboxCompare from 'mapbox-gl-compare';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import 'mapbox-gl-compare/dist/mapbox-gl-compare.css';
-import '../styles/BandingPetaStyle.css'; // Pastikan import ini benar
+import '../styles/BandingPetaStyle.css'; // Sudah include legend dsb
+import '../styles/StyleApp.css';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
-// Legenda ZNT (berdasarkan harga)
 const zntLegendClasses = [
     { label: "≤ Rp 100.000", color: "#ffffb2" },
     { label: "Rp 100.001 – 200.000", color: "#fed976" },
@@ -18,7 +18,6 @@ const zntLegendClasses = [
     { label: "Rp > 5.000.000", color: "#b10026" }
 ];
 
-// Legenda PL (berdasarkan fungsi lahan)
 const plLegendClasses = [
     { label: "Pemukiman", color: "#c62828" },
     { label: "Perkebunan", color: "#6d4c41" },
@@ -52,19 +51,15 @@ const getColorByfungsi = (fungsi) => {
     }
 };
 
-// Fungsi pembantu untuk memformat angka menjadi format mata uang Rupiah
 const formatRupiah = (amount) => {
-    if (typeof amount !== 'number') {
-        return amount; // Mengembalikan nilai asli jika bukan angka
-    }
+    if (typeof amount !== 'number') return amount;
     return new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',
-        minimumFractionDigits: 0, // Tidak ada desimal untuk rupiah
+        minimumFractionDigits: 0,
         maximumFractionDigits: 0,
     }).format(amount);
 };
-
 
 const MapboxCompareComponent = () => {
     const leftMapContainer = useRef(null);
@@ -113,7 +108,7 @@ const MapboxCompareComponent = () => {
         if (!maps.current.leftMap) {
             maps.current.leftMap = new mapboxgl.Map({
                 container: leftMapContainer.current,
-                style: 'mapbox://styles/mapbox/satellite-streets-v12', // Ganti dengan style yang Anda inginkan
+                style: 'mapbox://styles/mapbox/satellite-streets-v12',
                 center: initialCenter,
                 zoom: initialZoom,
                 attributionControl: false
@@ -121,7 +116,7 @@ const MapboxCompareComponent = () => {
 
             maps.current.rightMap = new mapboxgl.Map({
                 container: rightMapContainer.current,
-                style: 'mapbox://styles/mapbox/satellite-streets-v12', // Ganti dengan style yang Anda inginkan
+                style: 'mapbox://styles/mapbox/satellite-streets-v12',
                 center: initialCenter,
                 zoom: initialZoom,
                 attributionControl: false
@@ -153,11 +148,9 @@ const MapboxCompareComponent = () => {
 
                 mapData.data.features.forEach(f => {
                     if (!f.properties) f.properties = {};
-                    if (mapData.type === 'ZNT') {
-                        f.properties.fillColor = getColorByHarga(f.properties.Harga);
-                    } else {
-                        f.properties.fillColor = getColorByfungsi(f.properties['Fungsi Lahan']);
-                    }
+                    f.properties.fillColor = mapData.type === 'ZNT'
+                        ? getColorByHarga(f.properties.Harga)
+                        : getColorByfungsi(f.properties['Fungsi Lahan']);
                 });
 
                 map.addSource(sourceId, { type: 'geojson', data: mapData.data });
@@ -172,53 +165,27 @@ const MapboxCompareComponent = () => {
                     }
                 });
 
-                // Add click event listener for the layer
                 map.on('click', layerId, (e) => {
-                    const features = e.features;
-                    if (features && features.length > 0) {
-                        const clickedFeature = features[0];
-                        const properties = clickedFeature.properties;
+                    const f = e.features?.[0];
+                    if (!f) return;
 
-                        // Mulai membuat konten popup dengan format tabel
-                        let popupContent = '<table class="feature-info-table">';
-                        popupContent += '<thead><tr><th colspan="2">Properti Fitur</th></tr></thead>';
-                        popupContent += '<tbody>';
-                        for (const key in properties) {
-                            // Hindari menampilkan 'fillColor' yang merupakan properti internal
-                            if (key !== 'fillColor') {
-                                let displayValue = properties[key];
-                                // Cek jika key adalah 'Harga' dan dataMap adalah ZNT
-                                if (key === 'Harga' && mapData.type === 'ZNT') {
-                                    displayValue = formatRupiah(properties[key]);
-                                }
-                                popupContent += `<tr><td><b>${key}:</b></td><td>${displayValue}</td></tr>`;
-                            }
+                    let html = '<table class="feature-info-table"><thead><tr><th colspan="2">Properti Fitur</th></tr></thead><tbody>';
+                    for (const key in f.properties) {
+                        if (key !== 'fillColor') {
+                            const val = (key === 'Harga' && mapData.type === 'ZNT') ? formatRupiah(f.properties[key]) : f.properties[key];
+                            html += `<tr><td><b>${key}</b></td><td>${val}</td></tr>`;
                         }
-                        popupContent += '</tbody></table>';
-
-                        new mapboxgl.Popup()
-                            .setLngLat(e.lngLat)
-                            .setHTML(popupContent)
-                            .addTo(map);
                     }
+                    html += '</tbody></table>';
+                    new mapboxgl.Popup().setLngLat(e.lngLat).setHTML(html).addTo(map);
                 });
 
-                // Change the cursor to a pointer when the mouse is over the layer.
-                map.on('mouseenter', layerId, () => {
-                    map.getCanvas().style.cursor = 'pointer';
-                });
-
-                // Change the cursor back to a grab when it leaves the layer.
-                map.on('mouseleave', layerId, () => {
-                    map.getCanvas().style.cursor = '';
-                });
+                map.on('mouseenter', layerId, () => map.getCanvas().style.cursor = 'pointer');
+                map.on('mouseleave', layerId, () => map.getCanvas().style.cursor = '');
             };
 
-            if (map.isStyleLoaded()) {
-                performAddLayer();
-            } else {
-                map.once('styledata', performAddLayer);
-            }
+            if (map.isStyleLoaded()) performAddLayer();
+            else map.once('styledata', performAddLayer);
         };
 
         addLayerToMap(maps.current.leftMap, leftMapData, 'left');
@@ -232,66 +199,82 @@ const MapboxCompareComponent = () => {
         };
     }, [leftMapData, rightMapData]);
 
-    const getLegendByType = (type) => {
-        if (type === 'ZNT') return zntLegendClasses;
-        if (type === 'PL') return plLegendClasses;
-        return [];
-    };
-
-    const getLegendType = (selection) => {
-        const found = dataOptions.find(opt => opt.value === selection);
-        return found ? found.type : null;
-    };
+    const getLegendByType = (type) => type === 'ZNT' ? zntLegendClasses : plLegendClasses;
+    const getLegendType = (selection) => dataOptions.find(opt => opt.value === selection)?.type;
 
     return (
-        <div className="beranda-container">
-            <h1 className="judul">Bandingkan Peta</h1> {/* Menggunakan .judul dari StyleApp.css */}
+        <div className="app-container">
+            <div className="bandingpeta-container">
+                <h1 className="judul">Bandingkan Peta</h1>
 
-            <div className="map-controls-wrapper">
-                <div className="map-control-column">
-                    <label htmlFor="left-map-data-select">Menu Layer Kiri</label>
-                    <select id="left-map-data-select" value={leftSelection} onChange={e => setLeftSelection(e.target.value)}>
-                        {dataOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                    </select>
-                </div>
-                <div className="map-control-column">
-                    <label htmlFor="right-map-data-select">Menu Layer Kanan</label>
-                    <select id="right-map-data-select" value={rightSelection} onChange={e => setRightSelection(e.target.value)}>
-                        {dataOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-                    </select>
-                </div>
-            </div>
-
-            <div className="map-wrapper">
-                <div ref={compareContainer} className="compare-map-wrapper">
-                    <div ref={leftMapContainer} className="left-map" />
-                    <div ref={rightMapContainer} className="right-map" />
-
-                    <div className="legends-wrapper">
-                        <div className="legend-column">
-                            <h5>Legenda Layer Kiri</h5>
-                            <ul>
-                                {getLegendByType(getLegendType(leftSelection)).map((item, i) => (
-                                    <li key={i} className="legend-item"> {/* Menggunakan .legend-item */}
-                                        <span className="legend-color-box" style={{ backgroundColor: item.color }} /> {/* Menggunakan .legend-color-box */}
-                                        <span>{item.label}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="legend-column">
-                            <h5>Legenda Layer Kanan</h5>
-                            <ul>
-                                {getLegendByType(getLegendType(rightSelection)).map((item, i) => (
-                                    <li key={i} className="legend-item"> {/* Menggunakan .legend-item */}
-                                        <span className="legend-color-box" style={{ backgroundColor: item.color }} /> {/* Menggunakan .legend-color-box */}
-                                        <span>{item.label}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                <div className="map-controls-wrapper">
+                    <div className="map-control-column">
+                        <label htmlFor="left-map-data-select">Menu Layer Kiri</label>
+                        <select
+                            id="left-map-data-select"
+                            value={leftSelection}
+                            onChange={(e) => setLeftSelection(e.target.value)}
+                        >
+                            {dataOptions.map((opt) => (
+                                <option key={opt.value} value={opt.value}>
+                                    {opt.label}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
+                    <div className="map-control-column">
+                        <label htmlFor="right-map-data-select">Menu Layer Kanan</label>
+                        <select
+                            id="right-map-data-select"
+                            value={rightSelection}
+                            onChange={(e) => setRightSelection(e.target.value)}
+                        >
+                            {dataOptions.map((opt) => (
+                                <option key={opt.value} value={opt.value}>
+                                    {opt.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+
+                <div className="map-wrapper">
+                    <div ref={compareContainer} className="compare-map-wrapper">
+                        <div ref={leftMapContainer} className="left-map" />
+                        <div ref={rightMapContainer} className="right-map" />
+
+                        <div className="legends-wrapper">
+                            <div className="legend-column">
+                                <h5>Legenda Layer Kiri</h5>
+                                <ul>
+                                    {getLegendByType(getLegendType(leftSelection)).map((item, i) => (
+                                        <li key={i} className="legend-item">
+                                            <span
+                                                className="legend-color-box"
+                                                style={{ backgroundColor: item.color }}
+                                            />
+                                            <span>{item.label}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="legend-column">
+                                <h5>Legenda Layer Kanan</h5>
+                                <ul>
+                                    {getLegendByType(getLegendType(rightSelection)).map((item, i) => (
+                                        <li key={i} className="legend-item">
+                                            <span
+                                                className="legend-color-box"
+                                                style={{ backgroundColor: item.color }}
+                                            />
+                                            <span>{item.label}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
