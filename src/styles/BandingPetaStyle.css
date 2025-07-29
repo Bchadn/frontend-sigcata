@@ -208,43 +208,38 @@ select:focus {
 /* Responsif Mobile */
 /* =================== */
 @media (max-width: 768px) {
-  .map-controls-wrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  }
-
   .legends-wrapper {
     flex-direction: column;
     align-items: center;
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 20px);
-    bottom: 10px;
+    bottom: 80px; /* dinaikkan agar tidak tabrakan dengan footer */
     gap: 10px;
   }
 
   .legend-column {
-    width: 95%;
-    font-size: 0.8rem;
-    max-height: 150px;
-    padding: 8px;
+    width: 90%;
+    font-size: 0.75rem;
+    max-height: 120px;
+    padding: 6px;
+    overflow-y: auto;
   }
 
   .legend-column h5 {
-    font-size: 0.9em;
-    margin-bottom: 6px;
-  }
-
-  .legend-item {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     margin-bottom: 4px;
   }
 
+  .legend-item {
+    font-size: 0.7rem;
+    margin-bottom: 3px;
+  }
+
   .legend-color-box {
-    width: 12px;
-    height: 12px;
-    margin-right: 6px;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
   }
 }
 
