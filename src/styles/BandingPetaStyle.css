@@ -208,42 +208,68 @@ select:focus {
 /* Responsif Mobile */
 /* =================== */
 @media (max-width: 768px) {
+  /* Tata letak wrapper legenda saat mobile */
   .legends-wrapper {
     position: absolute;
-    top: 10px; /* Pindahkan ke atas */
-    bottom: auto;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
     flex-direction: column;
     align-items: center;
     width: calc(100% - 20px);
     z-index: 5;
+    gap: 8px;
+    pointer-events: none;
   }
 
+  /* Ukuran dan tampilan kotak legenda */
   .legend-column {
-    width: 90%;
-    font-size: 0.75rem;
-    max-height: 120px;
-    padding: 6px;
-    overflow-y: auto;
-    cursor: move;
-    touch-action: none;
-  }
-
-  .legend-column h5 {
-    font-size: 0.85rem;
-    margin-bottom: 4px;
-  }
-
-  .legend-item {
+    width: 85%;
     font-size: 0.7rem;
-    margin-bottom: 3px;
+    max-height: 100px;
+    padding: 5px 8px;
+    overflow-y: auto;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--app-gray-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
+    touch-action: none;
+    cursor: move;
   }
 
+  /* Judul legenda */
+  .legend-column h5 {
+    font-size: 0.8rem;
+    margin: 0 0 4px 0;
+    text-align: center;
+    color: var(--app-primary);
+    font-weight: 600;
+    user-select: none;
+  }
+
+  /* Daftar item legenda */
+  .legend-item {
+    font-size: 0.65rem;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    line-height: 1.1;
+    cursor: default;
+  }
+
+  .legend-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Kotak warna legenda */
   .legend-color-box {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     margin-right: 5px;
+    border: 1px solid var(--app-gray);
+    border-radius: 2px;
+    flex-shrink: 0;
   }
 }
 
