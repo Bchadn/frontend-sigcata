@@ -812,6 +812,7 @@ function Peta() {
                   const props = entity.properties;
                   const harga = props?.Harga?.getValue?.() ?? 0;
                   const zona = props?.["Nomor Zona"]?.getValue?.() ?? "";
+                  const keterangan = props?.["Keterangan"]?.getValue?.() ?? "";
                   const color = getColorByHarga(harga);
 
                   if (entity.polygon) {
@@ -829,6 +830,7 @@ function Peta() {
                       <tbody>
                         <tr><th>Nomor Zona</th><td>${zona}</td></tr>
                         <tr><th>Harga</th><td>Rp ${harga.toLocaleString("id-ID")}</td></tr>
+                        <tr><th>Keterangan</th><td>${keterangan}</td></tr>
                       </tbody>
                     </table>`;
                 });
@@ -853,6 +855,7 @@ function Peta() {
                   const props = entity.properties;
                   const harga = props?.Harga?.getValue?.() ?? 0;
                   const zona = props?.["Nomor Zona"]?.getValue?.() ?? "";
+                  const keterangan = props?.["Keterangan"]?.getValue?.() ?? "";
                   const color = getColorByHarga(harga);
 
                   if (entity.polygon) {
@@ -870,6 +873,7 @@ function Peta() {
                       <tbody>
                         <tr><th>Nomor Zona</th><td>${zona}</td></tr>
                         <tr><th>Harga</th><td>Rp ${harga.toLocaleString("id-ID")}</td></tr>
+                        <tr><th>Keterangan</th><td>${keterangan}</td></tr>
                       </tbody>
                     </table>`;
                 });
@@ -894,6 +898,7 @@ function Peta() {
                   const props = entity.properties;
                   const harga = props?.Harga?.getValue?.() ?? 0;
                   const zona = props?.["Nomor Zona"]?.getValue?.() ?? "";
+                  const keterangan = props?.["Keterangan"]?.getValue?.() ?? "";
                   const color = getColorByHarga(harga);
 
                   if (entity.polygon) {
@@ -911,6 +916,7 @@ function Peta() {
                       <tbody>
                         <tr><th>Nomor Zona</th><td>${zona}</td></tr>
                         <tr><th>Harga</th><td>Rp ${harga.toLocaleString("id-ID")}</td></tr>
+                        <tr><th>Keterangan</th><td>${keterangan}</td></tr>
                       </tbody>
                     </table>`;
                 });
@@ -935,6 +941,7 @@ function Peta() {
                 ds.entities.values.forEach(entity => {
                   const props = entity.properties;
                   const fungsi = props?.["Fungsi Lahan"]?.getValue?.() ?? '';
+                  const kategori = props?.["Kategori"]?.getValue?.() ?? '';
                   const color = getColorByfungsi(fungsi);
 
                   if (entity.polygon) {
@@ -948,11 +955,12 @@ function Peta() {
 
                   entity.name = "Penggunaan Lahan 2019";
                   entity.description = `
-          <table class="cesium-infoBox-defaultTable">
-            <tbody>
-              <tr><th>Fungsi</th><td>${fungsi}</td></tr>
-            </tbody>
-          </table>`;
+                  <table class="cesium-infoBox-defaultTable">
+                   <tbody>
+                     <tr><th>Fungsi</th><td>${fungsi}</td></tr>
+                     <tr><th>Kategori</th><td>${kategori}</td></tr>
+                   </tbody>
+                  </table>`;
                 });
               }}
             />
@@ -975,6 +983,7 @@ function Peta() {
                 ds.entities.values.forEach(entity => {
                   const props = entity.properties;
                   const fungsi = props?.["Fungsi Lahan"]?.getValue?.() ?? '';
+                  const kategori = props?.["Kategori"]?.getValue?.() ?? '';
                   const color = getColorByfungsi(fungsi);
 
                   if (entity.polygon) {
@@ -988,11 +997,12 @@ function Peta() {
 
                   entity.name = "Penggunaan Lahan 2021";
                   entity.description = `
-          <table class="cesium-infoBox-defaultTable">
-            <tbody>
-              <tr><th>Fungsi</th><td>${fungsi}</td></tr>
-            </tbody>
-          </table>`;
+                    <table class="cesium-infoBox-defaultTable">
+                      <tbody>
+                        <tr><th>Fungsi</th><td>${fungsi}</td></tr>
+                        <tr><th>Kategori</th><td>${kategori}</td></tr>
+                      </tbody>
+                    </table>`;
                 });
               }}
             />
@@ -1015,6 +1025,7 @@ function Peta() {
                 ds.entities.values.forEach(entity => {
                   const props = entity.properties;
                   const fungsi = props?.["Fungsi Lahan"]?.getValue?.() ?? '';
+                  const kategori = props?.["Kategori"]?.getValue?.() ?? '';
                   const color = getColorByfungsi(fungsi);
 
                   if (entity.polygon) {
@@ -1028,11 +1039,12 @@ function Peta() {
 
                   entity.name = "Penggunaan Lahan 2025";
                   entity.description = `
-          <table class="cesium-infoBox-defaultTable">
-            <tbody>
-              <tr><th>Fungsi</th><td>${fungsi}</td></tr>
-            </tbody>
-          </table>`;
+                    <table class="cesium-infoBox-defaultTable">
+                      <tbody>
+                        <tr><th>Fungsi</th><td>${fungsi}</td></tr>
+                        <tr><th>Kategori</th><td>${kategori}</td></tr>
+                      </tbody>
+                    </table>`;
                 });
               }}
             />
