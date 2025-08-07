@@ -726,23 +726,28 @@ function Peta() {
 
                 ds.entities.values.forEach(entity => {
                   const props = entity.properties;
+                  const idsampel = props?.["No Sampel"]?.getValue?.() ?? '';
                   const noZona = props?.["No Zona"]?.getValue?.() ?? '';
                   const keterangan = props?.["Keterangan"]?.getValue?.() ?? '';
                   const x = props?.["Koordinat X"]?.getValue?.() ?? '';
                   const y = props?.["Koordinat Y"]?.getValue?.() ?? '';
                   const harga = props?.["Harga per m2"]?.getValue?.() ?? 0;
+                  const gambarUrl = props?.["Gambar"]?.getValue?.() ?? ''; // Sudah URL lengkap
 
                   entity.name = `Sampel ZNT - Zona ${noZona}`;
                   entity.description = `
-                  <table class="cesium-infoBox-defaultTable">
-                     <tbody>
-                        <tr><th>No Zona</th><td>${noZona}</td></tr>
-                        <tr><th>Keterangan</th><td>${keterangan}</td></tr>
-                        <tr><th>Koordinat X</th><td>${x}</td></tr>
-                        <tr><th>Koordinat Y</th><td>${y}</td></tr>
-                        <tr><th>Harga/m²</th><td>Rp ${harga.toLocaleString("id-ID")}</td></tr>
-                      </tbody>
-                  </table>`;
+                      <table class="cesium-infoBox-defaultTable">
+                        <tbody>
+                          <tr><th>No Sampel</th><td>${idsampel}</td></tr>
+                          <tr><th>No Zona</th><td>${noZona}</td></tr>
+                          <tr><th>Keterangan</th><td>${keterangan}</td></tr>
+                          <tr><th>Koordinat X</th><td>${x}</td></tr>
+                          <tr><th>Koordinat Y</th><td>${y}</td></tr>
+                          <tr><th>Harga/m²</th><td>Rp ${harga.toLocaleString("id-ID")}</td></tr>
+                          <tr><th>Gambar</th><td><img src="${gambarUrl}" alt="Foto Sampel ${idsampel}" style="max-width: 200px; max-height: 150px;" /></td></tr>
+                        </tbody>
+                      </table>
+                    `;
 
                   if (entity.position) {
                     entity.point = new Cesium.PointGraphics({
@@ -757,6 +762,7 @@ function Peta() {
               }}
             />
           )}
+
 
           {/* Render Zona Awal 2025 GeoJSON */}
           {zonaawal2025 && layerStates.znt.zonaawal2025 && (
