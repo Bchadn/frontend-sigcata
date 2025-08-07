@@ -134,7 +134,7 @@ function Filter({ visible, onClose, onApplyFilter, layerStates }) { // Menambahk
 
                 {selectedDataType === 'znt' && (
                     <section>
-                        <h4>Filter Harga (opsional untuk Zona Nilai Tanah):</h4>
+                        <h4>Filter Harga:</h4>
                         <input
                             type="number"
                             placeholder="Min: (≥ 0)"
@@ -154,7 +154,7 @@ function Filter({ visible, onClose, onApplyFilter, layerStates }) { // Menambahk
 
                 {selectedDataType === 'penggunaanLahan' && (
                     <section>
-                        <h4>Fungsi Lahan (opsional untuk Penggunaan Lahan):</h4>
+                        <h4>Fungsi Lahan:</h4>
                         <div className="fungsi-lahan-grid"> {/* Menggunakan fungsi-lahan-grid */}
                             {[
                                 'Pemukiman',
