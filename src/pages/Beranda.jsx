@@ -24,7 +24,7 @@ function Beranda() {
 
           <a href="https://drive.google.com/drive/folders/1_fxwYBGjJvkWyL3faGSU4JQKSXCet1DW?usp=drive_link" target="_blank" rel="noopener noreferrer">
             <p className="highlight-beranda">
-              Download Data
+              Download Data/Panduan WebGIS
             </p>
           </a>
         </div>
