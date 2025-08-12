@@ -279,8 +279,8 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
                             type="number"
                             value={maxHarga}
                             onChange={(e) => setMaxHarga(e.target.value)}
-                            max="5000000"
-                            placeholder="≤ 5.000.000"
+                            max="6000000"
+                            placeholder="≤ 6.000.000"
                             disabled={!dataTypeZNT}
                         />
                     </div>

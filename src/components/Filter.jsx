@@ -144,10 +144,10 @@ function Filter({ visible, onClose, onApplyFilter, layerStates }) { // Menambahk
                         />
                         <input
                             type="number"
-                            placeholder="Max: (≤ 5.000.000)"
+                            placeholder="Max: (≤ 6.000.000)"
                             value={maxHarga}
                             onChange={(e) => setMaxHarga(e.target.value)}
-                            max="5000000"
+                            max="6000000"
                         />
                     </section>
                 )}
