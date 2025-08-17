@@ -184,10 +184,10 @@
   }
 
   .compass {
-    right: 75px;
+    right: 30px;
     top: auto;
-    bottom: 180px;
-    width: 90px;
-    height: 90px;
+    bottom: 160px;
+    width: 70px;
+    height: 70px;
   }
 }
