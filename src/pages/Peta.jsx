@@ -150,6 +150,33 @@ function Peta() {
   }, []);
 
   // Efek samping untuk pengaturan awal Cesium Viewer(jika error)
+  useEffect(() => {
+    let interval = setInterval(() => {
+      const viewer = viewerRef.current?.cesiumElement;
+      if (!viewer) {
+        return; // belum siap, tunggu lagi
+      }
+
+      try {
+        const options = {
+          defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0, 15000),
+          enableCompass: true,
+          enableZoomControls: true,
+          enableDistanceLegend: true,
+          enableCompassOuterRing: true,
+        };
+
+        new CesiumNavigation(viewer, options);
+        console.log("✅ CesiumNavigation berhasil ditambahkan");
+
+        clearInterval(interval); // stop polling setelah berhasil
+      } catch (err) {
+        console.error("❌ Gagal menambahkan CesiumNavigation:", err);
+      }
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, []);
 
 
 
@@ -646,9 +673,6 @@ function Peta() {
           timeline={false}
           animation={false}
           fullscreenButton={true}
-          onReady={(viewer) => {
-            console.log("✅ Viewer siap:", viewer);
-          }}
         >
           {/* Render Batas Administrasi GeoJSON */}
           {batasAdmin && layerStates.batasadmin.main && (
