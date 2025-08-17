@@ -168,6 +168,10 @@
 /* RESPONSIVE (MOBILE & SMALL)   */
 /* ============================= */
 @media screen and (max-width: 768px), screen and (max-height: 480px) {
+  .compass,
+  .compass-outer-ring,
+  .compass-gyro,
+  .compass-rotation-marker,
   .navigation-controls,
   .compass {
     display: block;
