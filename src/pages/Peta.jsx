@@ -4,7 +4,7 @@ import { Viewer, GeoJsonDataSource } from 'resium';
 import * as Cesium from 'cesium';
 import CesiumNavigation from 'cesium-navigation-es6';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
-import 'cesium-navigation-es6/dist/styles/cesium-navigation.css'
+import "cesium-navigation-es6/cesium-navigation.css";
 import '../styles/StylePeta.css';
 import '../styles/StyleApp.css';
 
@@ -169,6 +169,10 @@ function Peta() {
       },
     });
 
+    // cek apakah elemen navigasi sudah masuk ke DOM
+    const navEl = viewer.container.querySelector(".cesium-navigation");
+    console.log("CesiumNavigation element:", navEl);
+
     const loadInitialSetup = async () => {
       try {
         const terrain = await Cesium.CesiumTerrainProvider.fromIonAssetId(1);
@@ -199,6 +203,7 @@ function Peta() {
 
     loadInitialSetup();
   }, []);
+
 
   // Efek samping untuk mengelola layer Foto Udara
   useEffect(() => {
@@ -685,10 +690,10 @@ function Peta() {
           ref={viewerRef}
           className="map"
           full
-          baseLayerPicker={true}
-          geocoder={true}
-          homeButton={true}
-          navigationHelpButton={true}
+          baseLayerPicker={false}
+          geocoder={false}
+          homeButton={false}
+          navigationHelpButton={false}
           sceneModePicker={true}
           timeline={false}
           animation={false}
