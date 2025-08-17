@@ -440,6 +440,13 @@ function Peta() {
     };
   }, [layerStates.buildings.main]);
 
+  // Fungsi pembantu untuk menentukan warna berdasarkan keterangan
+  const getColorByKeterangan = (keterangan) => {
+    if (keterangan === "LP2B") return Cesium.Color.fromCssColorString('#ffeb3b');
+    if (keterangan === "Non LP2B") return Cesium.Color.fromCssColorString('#e31a1c');
+    return Cesium.Color.fromCssColorString('#b0b0b0'); //
+  };
+
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
   const getColorByHarga = (Harga) => {
     if (Harga <= 100000) return Cesium.Color.fromCssColorString('#ffffb2');
@@ -756,14 +763,12 @@ function Peta() {
             />
           )}
 
-
           {/* Render Zona Awal 2025 GeoJSON */}
           {zonaawal2025 && layerStates.znt.zonaawal2025 && (
             <GeoJsonDataSource
               data={zonaawal2025}
               stroke={Cesium.Color.BLACK}
               strokeWidth={1}
-              fill={Cesium.Color.ORANGE.withAlpha(0.25)}
               clampToGround={true}
               onLoad={async (ds) => {
                 ds.name = 'Zona Awal ZNT 2025';
@@ -773,16 +778,19 @@ function Peta() {
                 ds.entities.values.forEach(entity => {
                   const props = entity.properties;
                   const noZona = props?.["No Zona"]?.getValue?.() ?? '';
+                  const keterangan = props?.["Keterangan"]?.getValue?.() ?? '';
+                  const color = getColorByHarga(keterangan);
                   entity.name = `Zona Awal ${noZona}`;
                   entity.description = `
                   <table class="cesium-infoBox-defaultTable">
                       <tbody>
                         <tr><th>No Zona</th><td>${noZona}</td></tr>
+                        <tr><th>Keterangan</th><td>${keterangan}</td></tr>
                       </tbody>
                    </table>`;
 
                   if (entity.polygon) {
-                    entity.polygon.material = Cesium.Color.ORANGE.withAlpha(0.6);
+                    entity.polygon.material = color.withAlpha(0.6);
                     entity.polygon.height = 0;
                     entity.polygon.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
                     entity.polygon.perPositionHeight = false;
