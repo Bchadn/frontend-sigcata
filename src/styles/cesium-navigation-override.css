@@ -177,7 +177,7 @@
     display: block;
     visibility: visible;
     opacity: 1;
-    z-index: 9999;
+    z-index: 999;
   }
 
   .navigation-controls {
@@ -191,7 +191,7 @@
     right: 30px;
     top: auto;
     bottom: 160px;
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
   }
 }
