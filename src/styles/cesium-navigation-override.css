@@ -167,28 +167,27 @@
 /* ============================= */
 /* RESPONSIVE (MOBILE & SMALL)   */
 /* ============================= */
-@media screen and (max-width: 700px), screen and (max-height: 420px) {
+@media screen and (max-width: 768px), screen and (max-height: 480px) {
+  .navigation-controls,
+  .compass {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    z-index: 9999;
+  }
+
   .navigation-controls {
     right: 10px;
     top: auto;
     bottom: 80px;
-    width: 40px;
-    z-index: 9999;
+    width: 45px;
   }
 
   .compass {
     right: 10px;
     top: auto;
-    bottom: 140px;
+    bottom: 150px;
     width: 70px;
     height: 70px;
-    z-index: 9999;
-  }
-}
-
-@media print {
-  .navigation-controls,
-  .compass {
-    display: block;
   }
 }
