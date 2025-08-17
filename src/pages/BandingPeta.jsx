@@ -122,8 +122,20 @@ const MapboxCompareComponent = () => {
                 attributionControl: false
             });
 
+            // Navigasi
             maps.current.leftMap.addControl(new mapboxgl.NavigationControl(), 'top-left');
             maps.current.rightMap.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+            // Scale bar
+            maps.current.leftMap.addControl(new mapboxgl.ScaleControl({
+                maxWidth: 200,
+                unit: 'metric'
+            }), 'bottom-left');
+
+            maps.current.rightMap.addControl(new mapboxgl.ScaleControl({
+                maxWidth: 200,
+                unit: 'metric'
+            }), 'bottom-right');
 
             maps.current.compare = new MapboxCompare(
                 maps.current.leftMap,
