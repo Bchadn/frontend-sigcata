@@ -274,6 +274,9 @@ select:focus {
 /* =================== */
 /* Responsif Mobile */
 /* =================== */
+/* =================== */
+/* Responsif Mobile */
+/* =================== */
 @media (max-width: 768px) {
   /* Tata letak wrapper legenda saat mobile */
   .legends-wrapper {
@@ -285,59 +288,76 @@ select:focus {
     align-items: center;
     width: calc(100% - 20px);
     z-index: 5;
-    gap: 8px;
+    gap: 6px;
     pointer-events: none;
   }
 
-  /* Ukuran dan tampilan kotak legenda */
+  /* Ukuran kotak legenda */
   .legend-column {
     width: 85%;
-    font-size: 0.7rem;
-    max-height: 100px;
-    padding: 5px 8px;
-    overflow-y: auto;
-    border-radius: 6px;
-    background-color: rgba(255, 255, 255, 0.95);
-    border: 1px solid var(--app-gray-light);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    pointer-events: auto;
-    touch-action: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    cursor: grab;
-  }
-
-  /* Judul legenda */
-  .legend-column h5 {
-    font-size: 0.8rem;
-    margin: 0 0 4px 0;
-    text-align: center;
-    color: var(--app-primary);
-    font-weight: 600;
-    user-select: none;
-  }
-
-  /* Daftar item legenda */
-  .legend-item {
     font-size: 0.65rem;
+    max-height: 90px;
+    padding: 4px 6px;
+  }
+
+  .legend-column h5 {
+    font-size: 0.75rem;
     margin-bottom: 3px;
-    display: flex;
-    align-items: center;
-    line-height: 1.1;
-    cursor: default;
   }
 
-  .legend-item:last-child {
-    margin-bottom: 0;
+  .legend-item {
+    font-size: 0.6rem;
+    margin-bottom: 2px;
   }
 
-  /* Kotak warna legenda */
   .legend-color-box {
-    width: 8px;
-    height: 8px;
-    margin-right: 5px;
-    border: 1px solid var(--app-gray);
-    border-radius: 2px;
-    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    margin-right: 4px;
+  }
+
+  /* Dropdown menu */
+  .map-control-column {
+    padding: 6px;
+    gap: 4px;
+    min-width: unset;
+    max-width: 100%;
+    width: 90%;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  select {
+    font-size: 12px;
+    padding: 6px 8px;
+    max-width: 200px;
+  }
+
+  /* Scale bar mini */
+  .mapboxgl-ctrl-scale {
+    font-size: 10px;
+  }
+
+  .mapboxgl-ctrl-scale::after {
+    height: 1.5px;
+  }
+
+  .mapboxgl-ctrl-scale::before,
+  .mapboxgl-ctrl-scale::after {
+    height: 6px; /* garis tegak lebih pendek */
+  }
+
+  /* Popup info mini */
+  .mapboxgl-popup {
+    max-width: 240px;
+    font-size: 0.75rem;
+  }
+
+  .mapboxgl-popup-content .feature-info-table th,
+  .mapboxgl-popup-content .feature-info-table td {
+    padding: 4px 6px;
+    font-size: 0.75rem;
   }
 }
