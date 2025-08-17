@@ -246,29 +246,32 @@ select:focus {
 /* =================== */
 .mapboxgl-ctrl-scale {
   position: relative;
+  display: inline-block;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
   font-size: 12px;
   font-family: var(--font-family-sans-serif);
-  color: var(--app-black);
+  color: var(--app-white);
   margin: 4px;
   padding: 0;
   font-weight: bold;
   text-align: center;
+  line-height: 1.2;
 }
 
 /* garis horizontal */
 .mapboxgl-ctrl-scale::after {
   content: "";
-  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 2px;
   background: var(--app-white);
-  margin-top: 2px;
-  position: relative;
 }
 
-/* garis tegak kiri */
+/* garis vertikal kiri */
 .mapboxgl-ctrl-scale::before {
   content: "";
   position: absolute;
@@ -279,15 +282,12 @@ select:focus {
   background: var(--app-white);
 }
 
-/* garis tegak kanan */
-.mapboxgl-ctrl-scale span::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 2px;
-  height: 8px;
-  background: var(--app-white);
+/* garis vertikal kanan */
+.mapboxgl-ctrl-scale::marker {
+  display: none;
+}
+.mapboxgl-ctrl-scale::after {
+  box-shadow: inset -2px 0 0 0 var(--app-white);
 }
 
 /* =================== */
