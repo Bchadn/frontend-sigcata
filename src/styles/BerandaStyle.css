@@ -1,14 +1,14 @@
 :root {
-  --app-primary: #007bff; /* Biru yang lebih cerah, atau bisa #007bff (Blue) */
+  --app-primary: #007bff;
   --app-primary-hover: #0056b3;
-  --app-accent: #00bcd4; /* Cyan - Lebih hidup dari Teal sebelumnya */
-  --app-secondary-accent: #6f42c1; /* Ungu - Untuk gradien yang lebih dramatis dan mempesona */
+  --app-accent: #00bcd4;
+  --app-secondary-accent: #6f42c1;
   --app-white: #ffffff;
   --app-black: #1a1a1a;
   --app-gray-dark: #343a40;
   --app-gray: #6c757d;
   --app-gray-light: #e9ecef;
-  --app-hover-bg: #e0f7fa; /* Background hover yang lebih lembut sesuai tema baru */
+  --app-hover-bg: #e0f7fa;
   --app-active-bg: #007bff;
   --app-transition: 0.3s ease-in-out;
   --app-light: #f8f9fa;
@@ -120,9 +120,9 @@
 .deskripsi-beranda {
   font-size: 14px;
   color: var(--app-black);
-  line-height: 1.7; /* Jarak antarbaris */
-  letter-spacing: 0.3px; /* Spasi antarhuruf */
-  word-spacing: 1px; /* Spasi antar-kata */
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+  word-spacing: 1px;
   width: 800px;
   max-width: 100%;
   text-align: justify;

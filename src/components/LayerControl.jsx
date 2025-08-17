@@ -16,7 +16,7 @@ function LayerControl({ visible, onClose, layers, toggleLayer }) {
       <div className="layer-body">
         {layers.map((layerGroup, index) => (
           <div key={index} className="layer-group-container">
-            {layerGroup.type === 'group' ? ( // Bagian ini akan menangani semua grup sekarang
+            {layerGroup.type === 'group' ? (
               <>
                 <div className="layer-group-header">
                   <strong>{layerGroup.label}</strong>
@@ -27,7 +27,7 @@ function LayerControl({ visible, onClose, layers, toggleLayer }) {
                       <input
                         type="checkbox"
                         checked={layer.visible}
-                        onChange={() => toggleLayer(layerGroup.groupKey, layer.key)} // Mengirim groupKey dan layer.key
+                        onChange={() => toggleLayer(layerGroup.groupKey, layer.key)}
                       />
                       {layer.label}
                     </label>
@@ -35,7 +35,6 @@ function LayerControl({ visible, onClose, layers, toggleLayer }) {
                 ))}
               </>
             ) : (
-              // Bagian ini sekarang mungkin tidak akan pernah dipicu jika semua layer dibuat grup
               <div key={layerGroup.key} className="layer-item single-layer">
                 <label>
                   <input

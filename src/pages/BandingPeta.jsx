@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import MapboxCompare from 'mapbox-gl-compare';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import 'mapbox-gl-compare/dist/mapbox-gl-compare.css';
-import '../styles/BandingPetaStyle.css'; // Sudah include legend dsb
+import '../styles/BandingPetaStyle.css';
 import '../styles/StyleApp.css';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;

@@ -1,16 +1,16 @@
 /* StyleApp.css */
 /* Variabel CSS Global (Custom Properties) */
 :root {
-  --app-primary: #007bff; /* Biru yang lebih cerah, atau bisa #007bff (Blue) */
+  --app-primary: #007bff; 
   --app-primary-hover: #0056b3;
-  --app-accent: #00bcd4; /* Cyan - Lebih hidup dari Teal sebelumnya */
-  --app-secondary-accent: #6f42c1; /* Ungu - Untuk gradien yang lebih dramatis dan mempesona */
+  --app-accent: #00bcd4;
+  --app-secondary-accent: #6f42c1;
   --app-white: #ffffff;
   --app-black: #1a1a1a;
   --app-gray-dark: #343a40;
   --app-gray: #6c757d;
   --app-gray-light: #e9ecef;
-  --app-hover-bg: #e0f7fa; /* Background hover yang lebih lembut sesuai tema baru */
+  --app-hover-bg: #e0f7fa;
   --app-active-bg: #007bff;
   --app-transition: 0.3s ease-in-out;
   --app-light: #f8f9fa;
@@ -37,9 +37,6 @@
 /* =================== */
 /* Map & Viewer Layout */
 /* =================== */
-
-/* Wrapper utama yang membungkus peta dan kontrol */
-
 /* Viewer Cesium */
 .map {
   height: 100%;
@@ -57,14 +54,14 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background: var(--app-white); /* Menggunakan variabel warna */
+  background: var(--app-white);
   padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
   z-index: 1000;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
   font-size: 20px;
-  transition: background var(--app-transition); /* Menggunakan variabel transisi */
+  transition: background var(--app-transition);
 }
 
 .layer-toggle-button:hover {
@@ -78,7 +75,7 @@
   position: absolute;
   top: 60px;
   left: 10px;
-  background-color: rgba(255, 255, 255, 0.95); /* Pertahankan transparansi */
+  background-color: rgba(255, 255, 255, 0.95);
   padding: 12px 16px;
   border-radius: 8px;
   z-index: 999;
@@ -87,22 +84,22 @@
   min-width: 180px;
   max-height: calc(
     100vh - 220px
-  ); /* Pertahankan calc jika ada kebutuhan spesifik */
-  overflow-y: auto; /* Mengubah 'hidd' menjadi 'auto' untuk scroll yang benar */
+  );
+  overflow-y: auto;
 }
 
 .layer-sidebar label {
   display: flex;
   align-items: center;
-  gap: 10px; /* Jarak antara checkbox dan teks label */
+  gap: 10px;
   margin: 6px 0;
   cursor: pointer;
-  transition: background-color var(--app-transition); /* Menggunakan variabel transisi */
+  transition: background-color var(--app-transition);
   border-radius: 6px;
 }
 
 .layer-sidebar label:hover {
-  background-color: var(--app-hover-bg); /* Efek hover */
+  background-color: var(--app-hover-bg);
 }
 
 /* =================== */
@@ -124,7 +121,7 @@
   width: 16px;
   height: 16px;
   margin-right: 8px;
-  border: 1px solid var(--app-gray-light); /* Menggunakan variabel warna */
+  border: 1px solid var(--app-gray-light);
   display: inline-block;
 }
 
@@ -132,30 +129,29 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px; /* Menambahkan sedikit margin */
+  margin-bottom: 10px;
 }
 .close-btn {
   background: none;
   border: none;
-  font-size: 18px; /* Sedikit lebih besar untuk klik yang mudah */
+  font-size: 18px;
   cursor: pointer;
-  color: var(--app-gray-dark); /* Menggunakan variabel warna */
-  transition: color var(--app-transition); /* Menambahkan transisi */
+  color: var(--app-gray-dark);
+  transition: color var(--app-transition);
 }
 .close-btn:hover {
-  color: var(--app-danger); /* Efek hover */
+  color: var(--app-danger);
 }
 .layer-item {
   margin-top: 10px;
-  padding: 5px 0; /* Menambahkan padding untuk area klik yang lebih baik */
-  transition: background-color var(--app-transition); /* Menambahkan transisi */
+  padding: 5px 0;
+  transition: background-color var(--app-transition);/
 }
 .filter-toggle-button {
   position: absolute;
   top: 10px;
-  /* Change 'right: 10px;' to 'left: 60px;' or adjust based on the width of the layer-toggle-button and desired spacing */
-  left: 62px; /* This will place it 50px to the right of the layer-toggle-button (10px left + approx 40px width of layer-toggle-button) */
-  background: var(--app-white); /* Menggunakan variabel warna */
+  left: 62px;
+  background: var(--app-white);
   padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;
@@ -173,9 +169,8 @@
 .intersect-toggle-button {
   position: absolute;
   top: 10px;
-  /* Change 'right: 10px;' to 'left: 60px;' or adjust based on the width of the layer-toggle-button and desired spacing */
-  left: 110px; /* This will place it 50px to the right of the layer-toggle-button (10px left + approx 40px width of layer-toggle-button) */
-  background: var(--app-white); /* Menggunakan variabel warna */
+  left: 110px;
+  background: var(--app-white);
   padding: 8px 12px;
   border-radius: 6px;
   cursor: pointer;

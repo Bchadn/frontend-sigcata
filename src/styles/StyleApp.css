@@ -1,16 +1,15 @@
 /* StyleApp.css */
 /* Variabel CSS Global (Custom Properties) */
 :root {
-  --app-primary: #007bff; /* Biru yang lebih cerah, atau bisa #007bff (Blue) */
+  --app-primary: #007bff;
   --app-primary-hover: #0056b3;
-  --app-accent: #00bcd4; /* Cyan - Lebih hidup dari Teal sebelumnya */
-  --app-secondary-accent: #6f42c1; /* Ungu - Untuk gradien yang lebih dramatis dan mempesona */
-  --app-white: #ffffff;
+  --app-accent: #00bcd4;
+  --app-secondary-accent: #6f42c1;
   --app-black: #1a1a1a;
   --app-gray-dark: #343a40;
   --app-gray: #6c757d;
   --app-gray-light: #e9ecef;
-  --app-hover-bg: #e0f7fa; /* Background hover yang lebih lembut sesuai tema baru */
+  --app-hover-bg: #e0f7fa;
   --app-active-bg: #007bff;
   --app-transition: 0.3s ease-in-out;
   --app-light: #f8f9fa;
@@ -217,7 +216,6 @@ a:hover {
   text-decoration: none;
   text-align: left;
   letter-spacing: 1px;
-  /*Lebihhalus*/ /*Efekglowmenggunakanmultipleshadowdenganwarnaprimary*/
   background: linear-gradient(
     90deg,
     var(--app-primary),
@@ -225,7 +223,6 @@ a:hover {
   );
   -webkit-background-clip: text;
   background-clip: text;
-  /*Kompatibilitaslintasbrowser*/
   -webkit-text-fill-color: transparent;
 }
 
@@ -235,7 +232,6 @@ a:hover {
 
 /* =================== */
 /* Map Container */
-/* Mengubah tinggi map-container agar mengisi ruang yang tersedia di dalam beranda-container */
 .map-container {
   position: relative;
   flex-grow: 1;
@@ -243,7 +239,7 @@ a:hover {
   width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  background: var(--app-white); /* Menggunakan variabel warna */
+  background: var(--app-white);
 }
 
 /* Layout global utama */
@@ -256,8 +252,8 @@ a:hover {
 
 /* Container khusus halaman BandingPeta */
 .bandingpeta-container {
-  padding-top: 60px; /* Sesuaikan dengan tinggi Navbar */
-  padding-bottom: 40px; /* Sesuaikan dengan tinggi Footer */
+  padding-top: 60px;
+  padding-bottom: 40px;
   background-color: var(--app-light);
   font-family: var(--font-family-sans-serif);
   flex-grow: 1;

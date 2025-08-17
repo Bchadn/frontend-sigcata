@@ -1,9 +1,9 @@
 // src/components/Filter.jsx
 import React, { useState, useEffect } from 'react';
-import '../styles/FilterStyle.css'; // Pastikan ini mengarah ke FilterStyle.css yang baru
+import '../styles/FilterStyle.css';
 
-function Filter({ visible, onClose, onApplyFilter, layerStates }) { // Menambahkan 'visible' dan 'onClose' sebagai props
-    const [selectedDataType, setSelectedDataType] = useState(''); // 'znt' atau 'penggunaanLahan'
+function Filter({ visible, onClose, onApplyFilter, layerStates }) {
+    const [selectedDataType, setSelectedDataType] = useState('');
     const [selectedYears, setSelectedYears] = useState([]);
     const [multiYear, setMultiYear] = useState(false);
     const [minHarga, setMinHarga] = useState('');
@@ -18,24 +18,22 @@ function Filter({ visible, onClose, onApplyFilter, layerStates }) { // Menambahk
         setMinHarga('');
         setMaxHarga('');
         setSelectedFungsiLahan([]);
-        // Juga nonaktifkan semua layer ZNT dan Penggunaan Lahan di peta
         onApplyFilter({
             dataType: '',
             years: [],
             minHarga: null,
             maxHarga: null,
             fungsiLahan: [],
-            resetAll: true // Indikator untuk mereset visibilitas layer
+            resetAll: true // 
         });
-        // onClose(); // Opsional: tutup panel setelah reset, tergantung UX yang diinginkan
     };
 
     const handleDataTypeChange = (type) => {
         setSelectedDataType(type);
-        setSelectedYears([]); // Reset tahun saat jenis data berubah
-        setMinHarga(''); // Reset filter harga
+        setSelectedYears([]);
+        setMinHarga('');
         setMaxHarga('');
-        setSelectedFungsiLahan([]); // Reset filter fungsi lahan
+        setSelectedFungsiLahan([]);
     };
 
     const handleYearChange = (year) => {
@@ -50,7 +48,7 @@ function Filter({ visible, onClose, onApplyFilter, layerStates }) { // Menambahk
 
     const handleMultiYearChange = () => {
         setMultiYear(prev => !prev);
-        setSelectedYears([]); // Hapus tahun terpilih saat beralih multi-tahun
+        setSelectedYears([]);
     };
 
     const handleFungsiLahanChange = (fungsi) => {
@@ -66,17 +64,17 @@ function Filter({ visible, onClose, onApplyFilter, layerStates }) { // Menambahk
             minHarga: minHarga === '' ? null : Number(minHarga),
             maxHarga: maxHarga === '' ? null : Number(maxHarga),
             fungsiLahan: selectedFungsiLahan,
-            resetAll: false, // Bukan reset total
+            resetAll: false,
         };
         onApplyFilter(filters);
-        onClose(); // Tutup panel filter setelah menerapkan
+        onClose();
     };
 
     return (
-        <div className={`filter-panel ${visible ? 'visible' : ''}`}> {/* Menambahkan kelas 'visible' secara kondisional */}
+        <div className={`filter-panel ${visible ? 'visible' : ''}`}>
             <div className="filter-header">
                 <h3> ☰ Filter Panel</h3>
-                <button className="close-button" onClick={onClose}> {/* Menggunakan onClose dari props untuk menutup panel */}
+                <button className="close-button" onClick={onClose}>
                     &times;
                 </button>
             </div>
@@ -155,7 +153,7 @@ function Filter({ visible, onClose, onApplyFilter, layerStates }) { // Menambahk
                 {selectedDataType === 'penggunaanLahan' && (
                     <section>
                         <h4>Fungsi Lahan:</h4>
-                        <div className="fungsi-lahan-grid"> {/* Menggunakan fungsi-lahan-grid */}
+                        <div className="fungsi-lahan-grid">
                             {[
                                 'Pemukiman',
                                 'Perkebunan',

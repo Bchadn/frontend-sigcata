@@ -278,7 +278,6 @@ select:focus {
 /* Responsif Mobile */
 /* =================== */
 @media (max-width: 768px) {
-  /* Tata letak wrapper legenda saat mobile */
   .legends-wrapper {
     position: absolute;
     top: 10px;
@@ -292,7 +291,6 @@ select:focus {
     pointer-events: none;
   }
 
-  /* Ukuran kotak legenda */
   .legend-column {
     width: 85%;
     font-size: 0.65rem;
@@ -316,7 +314,6 @@ select:focus {
     margin-right: 4px;
   }
 
-  /* Dropdown menu */
   .map-control-column {
     padding: 6px;
     gap: 4px;
@@ -335,7 +332,6 @@ select:focus {
     max-width: 200px;
   }
 
-  /* Scale bar mini */
   .mapboxgl-ctrl-scale {
     font-size: 10px;
   }
@@ -346,10 +342,9 @@ select:focus {
 
   .mapboxgl-ctrl-scale::before,
   .mapboxgl-ctrl-scale::after {
-    height: 6px; /* garis tegak lebih pendek */
+    height: 6px;
   }
 
-  /* Popup info mini */
   .mapboxgl-popup {
     max-width: 240px;
     font-size: 0.75rem;

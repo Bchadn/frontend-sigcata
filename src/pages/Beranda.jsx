@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/BerandaStyle.css';
-import slide1 from '../assets/camtam.png'; // atau sesuaikan path file gambar kamu
+import slide1 from '../assets/camtam.png';
 
 function Beranda() {
   return (

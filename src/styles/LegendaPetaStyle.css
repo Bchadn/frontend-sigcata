@@ -24,7 +24,7 @@
   background: white;
   padding: 5px;
   border-radius: 5px;
-  margin-bottom: 0; /* Sesuaikan jika ada lebih dari satu legenda box dan perlu jarak antar mereka */
+  margin-bottom: 0;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -32,7 +32,7 @@
   font-weight: bold;
   margin-bottom: 5px;
   color: #333;
-  text-align: center; /* Tambahkan ini untuk meratakan judul ke tengah */
+  text-align: center;
 }
 
 .legendaList {

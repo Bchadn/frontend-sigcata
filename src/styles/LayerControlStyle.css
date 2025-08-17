@@ -44,7 +44,7 @@
   cursor: pointer;
   border-radius: 6px;
   transition: background-color 0.2s ease;
-  font-weight: normal; /* Atur ke nilai default atau yang Anda inginkan */
-  color: #333; /* Atur warna yang Anda inginkan */
+  font-weight: normal;
+  color: #333;
   font-size: 14px;
 }

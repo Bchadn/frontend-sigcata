@@ -47,9 +47,9 @@
 .deskripsi-section {
   font-size: 14px;
   color: var(--app-black);
-  line-height: 1.7; /* Jarak antarbaris */
-  letter-spacing: 0.3px; /* Spasi antarhuruf */
-  word-spacing: 1px; /* Spasi antar-kata */
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+  word-spacing: 1px;
   width: 800px;
   text-align: justify;
   margin: 2px 2px 2px 2px;

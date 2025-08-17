@@ -78,9 +78,7 @@ function Peta() {
     }));
   }, []);
 
-  // Callback untuk menerapkan filter dari komponen Filter
   const handleApplyFilter = useCallback((filters) => {
-    // Jika resetAll adalah true, reset hanya appliedFilters
     if (filters.resetAll) {
       setAppliedFilters({
         dataType: '',
@@ -94,7 +92,6 @@ function Peta() {
 
     setAppliedFilters(filters);
 
-    // Saat filter diterapkan, aktifkan layer yang difilter secara opsional
     setLayerStates(prev => {
       const newLayerStates = { ...prev };
 
@@ -122,17 +119,12 @@ function Peta() {
     setIntersectedData(data);
     setLayerStates(prev => {
       const newLayerStates = { ...prev };
-      // Nonaktifkan layer ZNT dan Penggunaan Lahan yang asli saat hasil interseksi ditampilkan
       newLayerStates.znt = { '2019': false, '2021': false, '2025': false };
       newLayerStates.penggunaanLahan = { '2019': false, '2021': false, '2025': false };
-
-      // Aktifkan 'intersectedResult' jika ada data, nonaktifkan jika data null
       newLayerStates.intersectedResult = { 'main': !!data };
-
       return newLayerStates;
     });
 
-    // Terbang ke hasil interseksi jika ada
     if (viewerRef.current?.cesiumElement && data && data.features.length > 0) {
       const viewer = viewerRef.current.cesiumElement;
       const tempDataSource = new Cesium.GeoJsonDataSource();
@@ -156,7 +148,6 @@ function Peta() {
       if (!viewer) {
         return;
       }
-
       try {
         const options = {
           defaultResetView: Cesium.Cartographic.fromDegrees(110.294605697, -7.10350522, 15000),
@@ -176,7 +167,7 @@ function Peta() {
     return () => clearInterval(interval);
   }, []);
 
-  // Efek samping untuk mengelola layer Foto Udara
+  // UseEffect untuk mengelola layer Foto Udara
   useEffect(() => {
     const viewer = viewerRef.current?.cesiumElement;
     if (!viewer) return;
@@ -228,7 +219,7 @@ function Peta() {
     };
   }, [layerStates.aerialImagery.main]);
 
-  // Efek samping untuk mengambil data GeoJSON Batas Administrasi
+  // UseEffect untuk mengambil data GeoJSON Batas Administrasi
   useEffect(() => {
     fetch('https://backend-sigcata-education.up.railway.app/batasadmin')
       .then(res => {
@@ -241,7 +232,7 @@ function Peta() {
       .catch((err) => console.error("Gagal memuat Batas Administrasi:", err));
   }, []);
 
-  // Efek samping untuk mengambil data Sampel ZNT
+  // UseEffect untuk mengambil data Sampel ZNT
   useEffect(() => {
     fetch('https://backend-sigcata-education.up.railway.app/sampelznt')
       .then(res => {
@@ -254,7 +245,7 @@ function Peta() {
       .catch((err) => console.error("Gagal memuat Sampel ZNT 2025:", err));
   }, []);
 
-  // Efek samping untuk mengambil data Zona Awal 2025
+  // UseEffect untuk mengambil data Zona Awal 2025
   useEffect(() => {
     fetch('https://backend-sigcata-education.up.railway.app/zonaawal')
       .then(res => {
@@ -267,7 +258,7 @@ function Peta() {
       .catch((err) => console.error("Gagal memuat Zona Awal 2025:", err));
   }, []);
 
-  // Efek samping untuk mengambil data ZNT secara dinamis
+  // UseEffect untuk mengambil data ZNT
   useEffect(() => {
     fetch('https://backend-sigcata-education.up.railway.app/znt/2019')
       .then(res => {
@@ -304,7 +295,7 @@ function Peta() {
       .catch((err) => console.error("Gagal memuat ZNT2025:", err));
   }, []);
 
-  // Efek samping untuk mengambil data Penggunaan Lahan secara dinamis
+  // UseEffect untuk mengambil data Penggunaan Lahan
   useEffect(() => {
     fetch('https://backend-sigcata-education.up.railway.app/pl/2019')
       .then(res => {
@@ -341,7 +332,7 @@ function Peta() {
       .catch((err) => console.error("Gagal memuat Penggunaan Lahan 2025:", err));
   }, []);
 
-  // Efek samping untuk mengelola Tileset 3D
+  // UseEffect untuk mengelola Tileset 3D
   useEffect(() => {
     const viewer = viewerRef.current?.cesiumElement;
     if (!viewer) return;
@@ -423,7 +414,6 @@ function Peta() {
         setupClickHandler();
       }
     } else {
-      // Jika layer dimatikan, hapus tileset & handler
       if (tilesetRef.current) {
         viewer.scene.primitives.remove(tilesetRef.current);
         tilesetRef.current = null;
@@ -440,7 +430,7 @@ function Peta() {
     };
   }, [layerStates.buildings.main]);
 
-  // Fungsi pembantu untuk menentukan warna berdasarkan keterangan
+  // Fungsi pembantu untuk menentukan warna berdasarkan keterangan Zona Awal
   const getColorByKeterangan = (keterangan) => {
     if (keterangan === "LP2B") return Cesium.Color.fromCssColorString('#ffeb3b');
     if (keterangan === "Non LP2B") return Cesium.Color.fromCssColorString('#e31a1c');
@@ -481,7 +471,7 @@ function Peta() {
     }
   };
 
-  // Fungsi untuk memfilter data GeoJSON berdasarkan kriteria
+  // Fungsi untuk memfilter data GeoJSON (filter tools)
   const filterGeoJSON = (data, filters) => {
     if (!data || !data.features) return null;
 
@@ -514,7 +504,6 @@ function Peta() {
     };
   };
 
-  // Penentuan data GeoJSON mana yang akan dirender berdasarkan layerStates dan appliedFilters
   const isFilterActiveForZNT = appliedFilters.dataType === 'znt' && appliedFilters.years.length > 0;
   const isFilterActiveForPL = appliedFilters.dataType === 'penggunaanLahan' && appliedFilters.years.length > 0;
 
@@ -548,11 +537,10 @@ function Peta() {
   const renderablePenggunaanLahan2021 = getRenderablePLData('2021', penggunaanLahan2021);
   const renderablePenggunaanLahan2025 = getRenderablePLData('2025', penggunaanLahan2025);
 
-  // Penentuan kapan legenda harus ditampilkan
+  //Legenda
   const showPL2019 = layerStates.penggunaanLahan['2019'] && (isFilterActiveForPL ? appliedFilters.years.includes('2019') : true);
   const showPL2021 = layerStates.penggunaanLahan['2021'] && (isFilterActiveForPL ? appliedFilters.years.includes('2021') : true);
   const showPL2025 = layerStates.penggunaanLahan['2025'] && (isFilterActiveForPL ? appliedFilters.years.includes('2025') : true);
-
   const showZNT2019 = layerStates.znt['2019'] && (isFilterActiveForZNT ? appliedFilters.years.includes('2019') : true);
   const showZNT2021 = layerStates.znt['2021'] && (isFilterActiveForZNT ? appliedFilters.years.includes('2021') : true);
   const showZNT2025 = layerStates.znt['2025'] && (isFilterActiveForZNT ? appliedFilters.years.includes('2025') : true);

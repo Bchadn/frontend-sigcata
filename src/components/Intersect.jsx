@@ -1,24 +1,16 @@
 // Intersect.jsx
 import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 
 function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
-    // State untuk Jenis Data
     const [dataTypeZNT, setDataTypeZNT] = useState(false);
     const [dataTypePenggunaanLahan, setDataTypePenggunaanLahan] = useState(false);
-
-    // State untuk Tahun Data
     const [yearZNT, setYearZNT] = useState('');
     const [yearPenggunaanLahan, setYearPenggunaanLahan] = useState('');
-
-    // State untuk Pilih Fungsi Lahan (checkboxes)
     const [selectedFungsiLahan, setSelectedFungsiLahan] = useState([]);
-
-    // State untuk Filter Harga ZNT
     const [minHarga, setMinHarga] = useState('');
     const [maxHarga, setMaxHarga] = useState('');
 
-    // Opsi fungsi lahan yang tersedia
     const fungsiLahanOptions = [
         'Pemukiman',
         'Perkebunan',
@@ -29,15 +21,13 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
         'Jalan',
     ];
 
-    // Efek samping untuk mereset form setiap kali panel terlihat
+
     useEffect(() => {
         if (visible) {
-            resetForm(true); // Panggil dengan true untuk mereset form saja tanpa menghilangkan hasil di peta saat panel dibuka
+            resetForm(true);
         }
     }, [visible]);
 
-    // Fungsi untuk mereset semua state form
-    // Tambahkan parameter `clearMap` untuk mengontrol apakah peta juga harus direset
     const resetForm = (isInitialLoad = false) => {
         setDataTypeZNT(false);
         setDataTypePenggunaanLahan(false);
@@ -47,14 +37,11 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
         setMinHarga('');
         setMaxHarga('');
 
-        // Jika ini bukan saat panel pertama kali dimuat, panggil onApplyIntersectFilter(null)
-        // untuk menghapus hasil dari peta
         if (!isInitialLoad) {
             onApplyIntersectFilter(null);
         }
     };
 
-    // Handler untuk checkbox Fungsi Lahan
     const handleFungsiLahanChange = (e) => {
         const { value, checked } = e.target;
         setSelectedFungsiLahan(prev =>
@@ -62,9 +49,7 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
         );
     };
 
-    // Handler saat tombol "CARI DATA INTERSECTION" diklik
     const handleApply = async () => {
-        // Validasi dasar
         if (!dataTypeZNT && !dataTypePenggunaanLahan) {
             alert("Harap pilih setidaknya satu jenis data (Zona Nilai Tanah atau Penggunaan Lahan).");
             return;
@@ -100,7 +85,6 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
             }
         }
 
-        // Siapkan parameter filter untuk dikirim ke backend
         const intersectFilters = {
             dataTypeZNT,
             dataTypePenggunaanLahan,
@@ -114,8 +98,6 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
         console.log("Menerapkan Filter Interseksi:", intersectFilters);
 
         try {
-            // Mengirim permintaan ke backend untuk melakukan query interseksi
-            // Sesuaikan URL endpoint Anda. Contoh: https://backend-sigcata-education.up.railway.app/intersect-data
             const response = await fetch('https://backend-sigcata-education.up.railway.app/intersect-data', {
                 method: 'POST',
                 headers: {
@@ -131,16 +113,14 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
             const resultGeoJSON = await response.json();
             console.log("Hasil Interseksi (GeoJSON):", resultGeoJSON);
 
-            // Meneruskan hasil interseksi ke komponen Peta.jsx
             onApplyIntersectFilter(resultGeoJSON);
-            onClose(); // Tutup panel interseksi setelah filter diterapkan
+            onClose();
         } catch (error) {
             console.error("Gagal melakukan pencarian interseksi:", error);
             alert("Terjadi kesalahan saat mencari data interseksi. Silakan coba lagi.");
         }
     };
 
-    // Komponen tidak akan dirender jika 'visible' adalah false
     if (!visible) {
         return null;
     }
@@ -173,7 +153,6 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
                     </div>
                 </div>
 
-                {/* Tahun Data (Zona Nilai Tanah) */}
                 <div className="filter-section">
                     <h4>Tahun Data (Zona Nilai Tanah):</h4>
                     <div className="radio-group">
@@ -207,7 +186,6 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
                     </div>
                 </div>
 
-                {/* Tahun Data (Penggunaan Lahan) */}
                 <div className="filter-section">
                     <h4>Tahun Data (Penggunaan Lahan):</h4>
                     <div className="radio-group">
@@ -241,7 +219,6 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
                     </div>
                 </div>
 
-                {/* Pilih Fungsi Lahan */}
                 <div className="filter-section">
                     <h4>Pilih Fungsi Lahan:</h4>
                     <div className="checkbox-group">
@@ -259,7 +236,6 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
                     </div>
                 </div>
 
-                {/* Filter Harga ZNT */}
                 <div className="filter-section">
                     <h4>Filter Harga ZNT:</h4>
                     <div className="input-group">
@@ -286,9 +262,7 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
                     </div>
                 </div>
 
-                {/* Tombol Aksi */}
                 <div className="filter-actions">
-                    {/* Perbarui pemanggilan resetForm */}
                     <button onClick={() => resetForm(false)} className="reset-button">RESET</button>
                     <button onClick={handleApply} className="apply-button">TERAPKAN</button>
                 </div>
@@ -297,7 +271,6 @@ function Intersect({ visible, onClose, onApplyIntersectFilter, layerStates }) {
     );
 }
 
-// Menambahkan PropTypes untuk validasi props
 Intersect.propTypes = {
     visible: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,

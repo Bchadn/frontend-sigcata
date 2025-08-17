@@ -29,7 +29,7 @@ const LegendaBox = ({ title, items }) => (
                 <li key={label} className="legendaListItem">
                     <span
                         className="legendaColorBox"
-                        style={{ backgroundColor: warna }} // Style inline untuk warna karena dinamis
+                        style={{ backgroundColor: warna }}
                     />
                     <span className="legendaLabel">{label}</span>
                 </li>

@@ -11,17 +11,17 @@
    Definisi ini penting agar gaya konsisten di seluruh aplikasi.
    ========================================================================== */
 :root {
-  --app-primary: #007bff; /* Biru utama untuk aksi */
+  --app-primary: #007bff;
   --app-primary-hover: #0056b3;
   --app-white: #ffffff;
-  --app-gray-dark: #343a40; /* Teks gelap */
-  --app-gray: #6c757d; /* Border, teks sekunder */
-  --app-gray-light: #e9ecef; /* Latar belakang terang, border pembatas */
-  --app-light: #f8f9fa; /* Latar belakang elemen input */
-  --app-danger: #dc3545; /* Untuk tombol tutup/error */
-  --app-transition: 0.3s ease-in-out; /* Transisi umum */
+  --app-gray-dark: #343a40;
+  --app-gray: #6c757d;
+  --app-gray-light: #e9ecef;
+  --app-light: #f8f9fa;
+  --app-danger: #dc3545; 
+  --app-transition: 0.3s ease-in-out; 
 
-  --font-family-sans-serif: "Nunito", sans-serif; /* Font utama */
+  --font-family-sans-serif: "Nunito", sans-serif; /
 }
 
 /* ==========================================================================
@@ -29,31 +29,31 @@
    Kontainer utama panel.
    ========================================================================== */
 .filter-panel {
-  position: absolute; /* Posisi relatif terhadap elemen parent yang diposisikan */
-  top: 60px; /* Jarak dari atas */
-  right: 20px; /* Jarak dari kanan */
-  width: 300px; /* Lebar panel */
-  min-width: 180px; /* Lebar minimum */
-  background-color: var(--app-white); /* Latar belakang putih bersih */
-  padding: 16px 16px; /* Padding dalam panel */
-  border-radius: 8px; /* Sudut membulat */
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); /* Bayangan lembut */
-  z-index: 1000; /* Pastikan di atas elemen lain */
-  font-family: var(--font-family-sans-serif); /* Font aplikasi */
-  max-height: calc(100vh - 250px); /* Tinggi maksimum agar dapat di-scroll */
-  overflow-y: auto; /* Aktifkan scroll vertikal jika konten melebihi tinggi */
-  font-size: 14px; /* Ukuran font default */
-  color: var(--app-gray-dark); /* Warna teks default */
-  transform: translateX(100%); /* Awalnya tersembunyi di luar layar */
-  opacity: 0; /* Awalnya tidak terlihat */
-  pointer-events: none; /* Tidak bisa diinteraksi saat tersembunyi */
+  position: absolute; 
+  top: 60px; 
+  right: 20px; 
+  width: 300px; 
+  min-width: 180px; 
+  background-color: var(--app-white); 
+  padding: 16px 16px; 
+  border-radius: 8px; 
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); 
+  z-index: 1000; 
+  font-family: var(--font-family-sans-serif); 
+  max-height: calc(100vh - 250px); 
+  overflow-y: auto; 
+  font-size: 14px; 
+  color: var(--app-gray-dark); 
+  transform: translateX(100%); 
+  opacity: 0; 
+  pointer-events: none; 
 }
 
-/* Status Visibilitas Panel Filter */
+
 .filter-panel.visible {
-  transform: translateX(0); /* Muncul ke posisi asli */
-  opacity: 1; /* Terlihat penuh */
-  pointer-events: all; /* Bisa diinteraksi */
+  transform: translateX(0); 
+  opacity: 1; 
+  pointer-events: all; 
 }
 
 /* ==========================================================================
@@ -61,51 +61,49 @@
    Judul dan tombol tutup.
    ========================================================================== */
 .filter-header {
-  display: flex; /* Menggunakan flexbox untuk tata letak */
-  justify-content: space-between; /* Judul di kiri, tombol tutup di kanan */
-  align-items: center; /* Sejajarkan secara vertikal */
-  margin-bottom: 8px; /* Jarak bawah header */
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 8px; 
 }
 
 .filter-header h3 {
-  margin: 0; /* Hapus margin default */
-  font-size: 14px; /* Ukuran font judul */
-  color: var(--app-gray-dark); /* Warna judul */
-  font-weight: bold; /* Judul tebal */
+  margin: 0;
+  font-size: 14px;
+  color: var(--app-gray-dark); 
+  font-weight: bold; 
 }
 
 .close-button {
-  background: none; /* Tanpa latar belakang */
-  border: none; /* Tanpa border */
-  font-size: 20px; /* Ukuran ikon/teks tombol */
-  color: var(--app-gray-dark); /* Warna tombol */
-  cursor: pointer; /* Kursor pointer saat dihover */
-  padding: 0 5px; /* Padding kecil */
-  line-height: 1; /* Tinggi baris 1 */
-  transition: color 0.2s ease; /* Transisi warna saat hover */
+  background: none; 
+  border: none; 
+  font-size: 20px; 
+  color: var(--app-gray-dark); 
+  cursor: pointer; 
+  padding: 0 5px; 
+  line-height: 1; 
+  transition: color 0.2s ease; 
 }
 
 .close-button:hover {
-  color: var(--app-danger); /* Warna merah saat dihover */
+  color: var(--app-danger); 
 }
 
 .filter-content label {
-  font-size: 12px; /* disamakan */
+  font-size: 12px; 
   color: var(--app-gray-dark);
   font-weight: normal;
 }
 
-/* ==========================================================================
+/* ====================================
    Bagian Section dalam Panel Filter
-   Setiap blok filter (misalnya "Fungsi Lahan").
-   ========================================================================== */
+   ==================================== */
 .filter-panel section {
-  margin-bottom: 15px; /* Jarak bawah setiap bagian */
-  padding-bottom: 10px; /* Padding bawah untuk pemisah */
-  border-bottom: 1px dashed var(--app-gray); /* Garis putus-putus sebagai pemisah */
+  margin-bottom: 15px; 
+  padding-bottom: 10px; 
+  border-bottom: 1px dashed var(--app-gray); 
 }
 
-/* Menghilangkan border dan margin pada section terakhir */
 .filter-panel section:last-of-type {
   border-bottom: none;
   margin-bottom: 0;
@@ -118,43 +116,40 @@
   margin-bottom: 10px;
   font-size: 13px;
   color: var(--app-gray-dark);
-  text-transform: uppercase; /* Huruf kapital */
-  letter-spacing: 0.5px; /* Jarak antar huruf */
+  text-transform: uppercase; 
+  letter-spacing: 0.5px; 
 }
 
-/* ==========================================================================
-   Elemen Formulir (Label, Input Radio/Checkbox, Input Angka)
-   Styling untuk kontrol formulir.
-   ========================================================================== */
+/* ========================
+   Elemen Formulir 
+   ====================== */
 .filter-panel label {
-  display: flex; /* Menggunakan flexbox untuk sejajar */
-  align-items: center; /* Sejajarkan secara vertikal */
-  margin-bottom: 8px; /* Jarak bawah label */
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 8px; 
   font-size: 12px;
   cursor: pointer;
   color: var(--app-gray-dark);
 }
 
-/* Input Radio dan Checkbox Kustom */
 .filter-panel input[type="radio"],
 .filter-panel input[type="checkbox"] {
-  margin-right: 8px; /* Jarak kanan dari teks label */
-  appearance: none; /* Sembunyikan tampilan default browser */
-  width: 16px; /* Ukuran kotak/lingkaran */
+  margin-right: 8px; 
+  appearance: none; 
+  width: 16px; 
   height: 16px;
-  border: 1px solid var(--app-gray); /* Border abu-abu */
-  border-radius: 3px; /* Sudut membulat untuk checkbox */
-  background-color: var(--app-light); /* Latar belakang terang */
+  border: 1px solid var(--app-gray); 
+  border-radius: 3px; 
+  background-color: var(--app-light); 
   cursor: pointer;
-  position: relative; /* Untuk pseudo-element */
-  flex-shrink: 0; /* Mencegah elemen menyusut */
+  position: relative; 
+  flex-shrink: 0; 
 }
 
 .filter-panel input[type="radio"] {
-  border-radius: 50%; /* Bentuk lingkaran untuk radio button */
+  border-radius: 50%; 
 }
 
-/* Dot/Check pada radio/checkbox yang terpilih */
 .filter-panel input[type="radio"]:checked::before,
 .filter-panel input[type="checkbox"]:checked::before {
   content: "";
@@ -162,24 +157,23 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Pusatkan */
-  background-color: var(--app-primary); /* Warna primer saat dipilih */
+  transform: translate(-50%, -50%); 
+  background-color: var(--app-primary); 
 }
 
 .filter-panel input[type="radio"]:checked::before {
-  width: 8px; /* Ukuran dot */
+  width: 8px; 
   height: 8px;
-  border-radius: 50%; /* Bentuk dot lingkaran */
+  border-radius: 50%; 
 }
 
 .filter-panel input[type="checkbox"]:checked::before {
-  width: 10px; /* Ukuran centang (kotak kecil) */
+  width: 10px;
   height: 10px;
 }
 
-/* Input Angka */
 .filter-panel input[type="number"] {
-  width: calc(100% - 10px); /* Lebar penuh dikurangi padding */
+  width: calc(100% - 10px); 
   padding: 6px 8px;
   margin-top: 5px;
   border: 1px solid var(--app-gray);
@@ -190,43 +184,41 @@
 }
 
 .filter-panel input[type="number"]::placeholder {
-  color: var(--app-gray); /* Warna placeholder */
+  color: var(--app-gray);
 }
 
-/* ==========================================================================
+/* ===============================
    Grid Fungsi Lahan
-   Tata letak grid untuk opsi fungsi lahan.
-   ========================================================================== */
+   =============================== */
 .fungsi-lahan-grid {
-  display: grid; /* Menggunakan CSS Grid */
+  display: grid;
   grid-template-columns: repeat(
     auto-fit,
     minmax(120px, 1fr)
-  ); /* Kolom adaptif */
-  gap: 5px; /* Jarak antar item grid */
+  );
+  gap: 5px; 
 }
 .fungsi-lahan-grid label {
-  display: flex; /* Flexbox untuk tata letak */
-  align-items: center; /* Sejajarkan secara vertikal */
-  gap: 8px; /* Jarak antara checkbox dan teks label */
-  margin: 0; /* Hapus margin default */
-  padding: 6px; /* Padding untuk area klik yang lebih baik */
-  border-radius: 6px; /* Sudut membulat */
-  transition: background-color 0.2s ease; /* Transisi saat hover */
-  font-size: 12px; /* Atur ke nilai default atau yang Anda inginkan */
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
+  margin: 0; 
+  padding: 6px; 
+  border-radius: 6px; 
+  transition: background-color 0.2s ease; 
+  font-size: 12px; 
   text-align: left;
 }
 
-/* ==========================================================================
+/* ===============================
    Tombol Aksi Filter
-   Tombol "Kembalikan" dan "Cari Data".
-   ========================================================================= */
+   ================================ */
 .filter-actions {
-  display: flex; /* Menggunakan flexbox */
-  flex-direction: column; /* Tombol tersusun vertikal */
-  gap: 10px; /* Jarak antar tombol */
-  padding-top: 15px; /* Padding atas */
-  border-top: 1px solid var(--app-gray-light); /* Garis pemisah di atas tombol */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid var(--app-gray-light); 
 }
 
 .filter-actions button {
@@ -236,40 +228,38 @@
   cursor: pointer;
   font-weight: bold;
   font-size: 12px;
-  transition: background-color 0.2s ease, transform 0.1s ease; /* Transisi hover */
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .filter-actions .refresh-button {
-  background-color: var(--app-gray); /* Latar belakang abu-abu */
-  color: var(--app-white); /* Teks putih */
+  background-color: var(--app-gray);
+  color: var(--app-white);
 }
 
 .filter-actions .refresh-button:hover {
-  background-color: var(--app-gray-dark); /* Abu-abu gelap saat hover */
-  transform: translateY(-1px); /* Efek angkat sedikit */
+  background-color: var(--app-gray-dark);
+  transform: translateY(-1px);
 }
 
 .filter-actions .cari-button {
-  background-color: var(--app-primary); /* Latar belakang biru primer */
-  color: var(--app-white); /* Teks putih */
+  background-color: var(--app-primary);
+  color: var(--app-white);
 }
 
 .filter-actions .cari-button:hover {
-  background-color: var(--app-primary-hover); /* Biru lebih gelap saat hover */
-  transform: translateY(-1px); /* Efek angkat sedikit */
+  background-color: var(--app-primary-hover);
+  transform: translateY(-1px);
 }
 
-/* ==========================================================================
-   Responsif Desain
-   Penyesuaian untuk layar yang lebih kecil (misalnya mobile).
-   ========================================================================== */
+/* ========================
+   Responsif Desain Mobile
+   ======================== */
 @media (max-width: 576px) {
-  /* Untuk layar <= 576px (breakpoint-sm) */
   .filter-panel {
     top: 55px;
     right: 5px;
-    width: calc(100% - 20px); /* Ambil sebagian besar lebar layar */
-    max-height: calc(100vh - 100px); /* Sesuaikan tinggi maksimum */
+    width: calc(100% - 20px);
+    max-height: calc(100vh - 100px);
     padding: 10px 12px;
   }
 
