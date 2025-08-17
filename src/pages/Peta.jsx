@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Viewer, GeoJsonDataSource } from 'resium';
 import * as Cesium from 'cesium';
 import CesiumNavigation from "cesium-navigation-es6";
-import "cesium-navigation-es6/dist/styles/cesium-navigation.css";
+import "../styles/cesium-navigation.css";
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 import '../styles/StylePeta.css';
 import '../styles/StyleApp.css';
@@ -149,17 +149,17 @@ function Peta() {
     }
   }, []);
 
-  // Efek samping untuk pengaturan awal Cesium Viewer(jika error)
+  // Tambahkan Navigasi untuk Cesium
   useEffect(() => {
     let interval = setInterval(() => {
       const viewer = viewerRef.current?.cesiumElement;
       if (!viewer) {
-        return; // belum siap, tunggu lagi
+        return;
       }
 
       try {
         const options = {
-          defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0, 15000),
+          defaultResetView: Cesium.Cartographic.fromDegrees(110.4203, -7.0, 15000),
           enableCompass: true,
           enableZoomControls: true,
           enableDistanceLegend: true,
@@ -167,18 +167,14 @@ function Peta() {
         };
 
         new CesiumNavigation(viewer, options);
-        console.log("✅ CesiumNavigation berhasil ditambahkan");
-
-        clearInterval(interval); // stop polling setelah berhasil
+        clearInterval(interval);
       } catch (err) {
-        console.error("❌ Gagal menambahkan CesiumNavigation:", err);
+        clearInterval(interval);
       }
     }, 300);
 
     return () => clearInterval(interval);
   }, []);
-
-
 
   // Efek samping untuk mengelola layer Foto Udara
   useEffect(() => {
