@@ -271,25 +271,6 @@ select:focus {
   background: var(--app-white);
 }
 
-/* garis vertikal kiri */
-.mapboxgl-ctrl-scale::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 2px;
-  height: 8px;
-  background: var(--app-white);
-}
-
-/* garis vertikal kanan */
-.mapboxgl-ctrl-scale::marker {
-  display: none;
-}
-.mapboxgl-ctrl-scale::after {
-  box-shadow: inset -2px 0 0 0 var(--app-white);
-}
-
 /* =================== */
 /* Responsif Mobile */
 /* =================== */
