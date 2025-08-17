@@ -673,6 +673,22 @@ function Peta() {
           timeline={false}
           animation={false}
           fullscreenButton={true}
+          onReady={(viewer) => {
+            try {
+              const options = {
+                defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0, 15000),
+                enableCompass: true,
+                enableZoomControls: true,
+                enableDistanceLegend: true,
+                enableCompassOuterRing: true,
+              };
+
+              new CesiumNavigation(viewer, options);
+              console.log("✅ CesiumNavigation berhasil ditambahkan via onReady");
+            } catch (err) {
+              console.error("❌ Gagal menambahkan CesiumNavigation:", err);
+            }
+          }}
         >
           {/* Render Batas Administrasi GeoJSON */}
           {batasAdmin && layerStates.batasadmin.main && (
