@@ -1,14 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import '../styles/StyleNavbar.css';
 
 const Navbar = () => {
-  const location = useLocation();
-
   const navItems = [
-    { path: "/beranda", label: "Beranda", icon: "fas fa-home" },
-    { path: "/peta", label: "Peta", icon: "fas fa-map" },
+    { path: "/Beranda", label: "Beranda", icon: "fas fa-home" },
+    { path: "/Peta", label: "Peta", icon: "fas fa-map" },
     { path: "/BandingPeta", label: "Bandingkan Peta", icon: "fas fa-exchange-alt" },
-    { path: "/tentang", label: "Tentang Kami", icon: "fas fa-users" },
+    { path: "/Tentang", label: "Tentang Kami", icon: "fas fa-users" },
   ];
 
   return (
@@ -19,20 +17,20 @@ const Navbar = () => {
       </div>
 
       <ul className="sipeta-nav-items">
-        {navItems.map((item) => {
-          const isActive = location.pathname === item.path;
-          return (
-            <li key={item.path}>
-              <Link
-                to={item.path}
-                className={`sipeta-nav-link ${isActive ? "active" : ""}`}
-              >
-                <i className={item.icon}></i>
-                <span>{item.label}</span>
-              </Link>
-            </li>
-          );
-        })}
+        {navItems.map((item) => (
+          <li key={item.path}>
+            <NavLink
+              to={item.path}
+              className={({ isActive }) =>
+                `sipeta-nav-link ${isActive ? "active" : ""}`
+              }
+              end
+            >
+              <i className={item.icon}></i>
+              <span>{item.label}</span>
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </nav>
   );
