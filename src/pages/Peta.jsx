@@ -152,23 +152,33 @@ function Peta() {
   // Efek samping untuk pengaturan awal Cesium Viewer(jika error)
   useEffect(() => {
     const viewer = viewerRef.current?.cesiumElement;
-    if (!viewer) return;
-
-    try {
-      const options = {
-        defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0000, 15000),
-        enableCompass: true,
-        enableZoomControls: true,
-        enableDistanceLegend: true,
-        enableCompassOuterRing: true,
-      };
-
-      new CesiumNavigation(viewer, options);
-      console.log("CesiumNavigation berhasil ditambahkan");
-    } catch (err) {
-      console.error("Gagal menambahkan CesiumNavigation:", err);
+    if (!viewer) {
+      console.warn("Viewer belum siap saat useEffect pertama jalan");
+      return;
     }
+
+    const timer = setTimeout(() => {
+      try {
+        const options = {
+          defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0, 15000),
+          enableCompass: true,
+          enableZoomControls: true,
+          enableDistanceLegend: true,
+          enableCompassOuterRing: true,
+        };
+
+        new CesiumNavigation(viewer, options);
+
+        const navEl = viewer.container.querySelector(".cesium-navigation");
+        console.log("Navigation element:", navEl);
+      } catch (err) {
+        console.error("Gagal menambahkan CesiumNavigation:", err);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, []);
+
 
   // Efek samping untuk mengelola layer Foto Udara
   useEffect(() => {
@@ -224,34 +234,16 @@ function Peta() {
 
   // Efek samping untuk mengambil data GeoJSON Batas Administrasi
   useEffect(() => {
-    const viewer = viewerRef.current?.cesiumElement;
-    if (!viewer) {
-      console.warn("Viewer belum siap saat useEffect pertama jalan");
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      try {
-        const options = {
-          defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0, 15000),
-          enableCompass: true,
-          enableZoomControls: true,
-          enableDistanceLegend: true,
-          enableCompassOuterRing: true,
-        };
-
-        new CesiumNavigation(viewer, options);
-
-        const navEl = viewer.container.querySelector(".cesium-navigation");
-        console.log("Navigation element:", navEl);
-      } catch (err) {
-        console.error("Gagal menambahkan CesiumNavigation:", err);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
+    fetch('https://backend-sigcata-education.up.railway.app/batasadmin')
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Kesalahan HTTP! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(setBatasAdmin)
+      .catch((err) => console.error("Gagal memuat Batas Administrasi:", err));
   }, []);
-
 
   // Efek samping untuk mengambil data Sampel ZNT
   useEffect(() => {
