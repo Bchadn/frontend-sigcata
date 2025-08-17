@@ -444,7 +444,7 @@ function Peta() {
   const getColorByKeterangan = (keterangan) => {
     if (keterangan === "LP2B") return Cesium.Color.fromCssColorString('#ffeb3b');
     if (keterangan === "Non LP2B") return Cesium.Color.fromCssColorString('#e31a1c');
-    return Cesium.Color.fromCssColorString('#b0b0b0'); //
+    return Cesium.Color.fromCssColorString('#b0b0b0');
   };
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
@@ -779,7 +779,7 @@ function Peta() {
                   const props = entity.properties;
                   const noZona = props?.["No Zona"]?.getValue?.() ?? '';
                   const keterangan = props?.["Keterangan"]?.getValue?.() ?? '';
-                  const color = getColorByHarga(keterangan);
+                  const color = getColorByKeterangan(keterangan);
                   entity.name = `Zona Awal ${noZona}`;
                   entity.description = `
                   <table class="cesium-infoBox-defaultTable">
