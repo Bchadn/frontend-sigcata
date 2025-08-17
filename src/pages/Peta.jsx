@@ -8,7 +8,6 @@ import 'cesium-navigation-es6/dist/styles/cesium-navigation.css';
 import '../styles/StylePeta.css';
 import '../styles/StyleApp.css';
 
-
 // Import komponen yang diperlukan
 import LayerControl from '../components/LayerControl';
 import LegendaPeta from '../components/LegendaPeta';
@@ -156,19 +155,16 @@ function Peta() {
     if (!viewer) return;
 
     // Navigasi tambahan Cesium
-    CesiumNavigation(viewer, {
+    new CesiumNavigation(viewer, {
       enableCompass: true,
       enableZoomControls: true,
       enableDistanceLegend: true,
       enableCompassOuterRing: true,
       defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0000, 15000),
-      navigationOptions: {
-        compass: { position: "bottom-right" },
-        zoomControls: { position: "bottom-right" },
-        distanceLegend: { position: "bottom-left" },
-      },
+      resetTooltip: "Reset view", // contoh tambahan sesuai README
     });
 
+    // Debug
     const navEl = viewer.container.querySelector(".cesium-navigation");
     console.log("CesiumNavigation element:", navEl);
 
