@@ -2,7 +2,8 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Viewer, GeoJsonDataSource } from 'resium';
 import * as Cesium from 'cesium';
-import CesiumNavigation from 'cesium-navigation-es6';
+import CesiumNavigation from "cesium-navigation-es6";
+import "../styles/cesium-navigation.css";
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 import '../styles/StylePeta.css';
 import '../styles/StyleApp.css';
