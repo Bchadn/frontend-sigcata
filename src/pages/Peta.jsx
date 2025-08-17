@@ -153,8 +153,8 @@ function Peta() {
     if (!viewer) return;
 
     //Navigasi tambahan Cesium
-    if (Cesium.viewerCesiumNavigationMixin) {
-      viewer.extend(Cesium.viewerCesiumNavigationMixin, {
+    if (typeof CesiumNavigation !== "undefined") {
+      new CesiumNavigation(viewer, {
         enableCompass: true,
         enableZoomControls: true,
         enableDistanceLegend: true,
@@ -167,7 +167,9 @@ function Peta() {
       const navEl = viewer.container.querySelector(".cesium-navigation");
       console.log("CesiumNavigation element:", navEl);
     } else {
-      console.error("viewerCesiumNavigationMixin tidak ditemukan! Pastikan JS sudah dimuat di index.html");
+      console.error(
+        "CesiumNavigation tidak ditemukan!"
+      );
     }
 
     const loadInitialSetup = async () => {
