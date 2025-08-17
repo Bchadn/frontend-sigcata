@@ -169,10 +169,6 @@ function Peta() {
       },
     });
 
-    // cek apakah elemen navigasi sudah masuk ke DOM
-    const navEl = viewer.container.querySelector(".cesium-navigation");
-    console.log("CesiumNavigation element:", navEl);
-
     const loadInitialSetup = async () => {
       try {
         const terrain = await Cesium.CesiumTerrainProvider.fromIonAssetId(1);
