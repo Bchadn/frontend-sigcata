@@ -440,7 +440,14 @@ function Peta() {
     };
   }, [layerStates.buildings.main]);
 
-  // Fungsi pembantu untuk menentukan warna berdasarkan keterangan
+  // Fungsi pembantu untuk menentukan warna berdasarkan desa
+  const getColorByDesa = (desa) => {
+    if (desa === 'Tampingan') return Cesium.Color.fromCssColorString('#ff7043');
+    if (desa === 'Campurejo') return Cesium.Color.fromCssColorString('#42a5f5');
+    return Cesium.Color.fromCssColorString('#b0b0b0');
+  };
+
+  // Fungsi pembantu untuk menentukan warna berdasarkan keterangan zona awal
   const getColorByKeterangan = (keterangan) => {
     if (keterangan === "LP2B") return Cesium.Color.fromCssColorString('#ffeb3b');
     if (keterangan === "Non LP2B") return Cesium.Color.fromCssColorString('#e31a1c');
@@ -682,9 +689,8 @@ function Peta() {
           {batasAdmin && layerStates.batasadmin.main && (
             <GeoJsonDataSource
               data={batasAdmin}
-              stroke={Cesium.Color.BLUE}
-              strokeWidth={2}
-              fill={Cesium.Color.WHITE.withAlpha(0.25)}
+              stroke={Cesium.Color.BLACK}
+              strokeWidth={1}
               clampToGround={true}
               onLoad={async (ds) => {
                 ds.name = 'Batas Administrasi';
@@ -699,6 +705,7 @@ function Peta() {
                     const kecamatan = props.Kecamatan?.getValue?.() || '';
                     const kabupaten = props.Kabupaten?.getValue?.() || '';
                     const provinsi = props.Provinsi?.getValue?.() || '';
+                    const color = getColorByDesa(desa);
                     entity.name = "Batas Administrasi";
                     entity.description = `
                       <table class="cesium-infoBox-defaultTable">
@@ -709,6 +716,15 @@ function Peta() {
                           <tr><th>Provinsi</th><td>${provinsi}</td></tr>
                         </tbody>
                       </table>`;
+
+                    if (entity.polygon) {
+                      entity.polygon.material = color.withAlpha(0.4);
+                      entity.polygon.height = 0;
+                      entity.polygon.heightReference = Cesium.HeightReference.CLAMP_TO_GROUND;
+                      entity.polygon.perPositionHeight = false;
+                      entity.polygon.outline = true;
+                      entity.polygon.outlineColor = Cesium.Color.BLACK;
+                    }
                   }
                 });
               }}
