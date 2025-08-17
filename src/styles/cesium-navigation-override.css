@@ -173,7 +173,7 @@
   .compass-gyro,
   .compass-rotation-marker,
   .navigation-controls,
-  .compass {
+  .cesium-svgPath-svg {
     display: block;
     visibility: visible;
     opacity: 1;
