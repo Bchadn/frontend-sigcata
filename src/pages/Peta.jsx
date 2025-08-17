@@ -149,57 +149,7 @@ function Peta() {
     }
   }, []);
 
-  // Efek samping untuk pengaturan awal Cesium Viewer
-  useEffect(() => {
-    const viewer = viewerRef.current?.cesiumElement;
-    if (!viewer) return;
 
-    //Navigasi tambahan Cesium
-    const timer = setTimeout(() => {
-      new CesiumNavigation(viewer, {
-        enableCompass: true,
-        enableZoomControls: true,
-        enableDistanceLegend: true,
-        enableCompassOuterRing: true,
-        defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0000, 15000),
-        resetTooltip: "Reset view",
-      });
-
-      // cek apakah elemen navigasi muncul
-      const navEl = viewer.container.querySelector(".cesium-navigation");
-      console.log("CesiumNavigation element:", navEl);
-    }, 300);
-
-    const loadInitialSetup = async () => {
-      try {
-        const terrain = await Cesium.CesiumTerrainProvider.fromIonAssetId(1);
-        viewer.terrainProvider = terrain;
-        viewer.scene.globe.depthTestAgainstTerrain = true;
-        viewer.scene.globe.enableLighting = true;
-
-        viewer.scene.requestRenderMode = true;
-        viewer.scene.maximumRenderTimeChange = Infinity;
-
-        const imageryBounds = Cesium.Rectangle.fromDegrees(110.410, -7.005, 110.430, -6.995);
-        viewer.scene.screenSpaceCameraController.rectangleConstraint = imageryBounds;
-
-        viewer.scene.globe.tileLoadFailed.addEventListener(() => { });
-
-        viewer.camera.setView({
-          destination: Cesium.Cartesian3.fromDegrees(110.4203, -7.0000, 15000),
-          orientation: {
-            heading: Cesium.Math.toRadians(0.0),
-            pitch: Cesium.Math.toRadians(-45.0),
-            roll: 0.0,
-          },
-        });
-      } catch (error) {
-        console.error("Gagal memuat setup awal viewer:", error);
-      }
-    };
-
-    loadInitialSetup();
-  }, []);
 
 
   // Efek samping untuk mengelola layer Foto Udara
