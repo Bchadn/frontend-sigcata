@@ -3,10 +3,10 @@ import '../styles/LegendaPetaStyle.css';
 
 const legendaFungsiLahan = [
     { warna: 'rgba(198, 40, 40, 0.65)', label: 'Pemukiman' },
-    { warna: 'rgba(109, 76, 65, 0.65)', label: 'Perkebunan' },
+    { warna: 'rgba(62, 39, 35, 0.65)', label: 'Perkebunan' },
     { warna: 'rgba(255, 235, 59, 0.65)', label: 'Ladang' },
     { warna: 'rgba(43, 160, 71, 0.65)', label: 'Sawah' },
-    { warna: 'rgba(161, 136, 127, 0.65)', label: 'Semak Belukar' },
+    { warna: 'rgba(188, 138, 93, 0.65)', label: 'Semak Belukar' },
     { warna: 'rgba(33, 150, 243, 0.7)', label: 'Sungai' },
     { warna: 'rgba(117, 117, 117, 0.8)', label: 'Jalan' },
 ];

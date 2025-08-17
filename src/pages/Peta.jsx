@@ -449,6 +449,7 @@ function Peta() {
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
   const getColorByHarga = (Harga) => {
+    if (Harga === 0) return Cesium.Color.fromCssColorString('#ffeb3b');
     if (Harga <= 100000) return Cesium.Color.fromCssColorString('#ffffb2');
     if (Harga <= 200000) return Cesium.Color.fromCssColorString('#fed976');
     if (Harga <= 500000) return Cesium.Color.fromCssColorString('#feb24c');
@@ -462,21 +463,21 @@ function Peta() {
   const getColorByfungsi = (fungsi) => {
     switch (fungsi?.toLowerCase()) {
       case 'pemukiman':
-        return Cesium.Color.fromCssColorString('#c62828').withAlpha(0.65); // Merah Tua
+        return Cesium.Color.fromCssColorString('#c62828').withAlpha(0.65);
       case 'perkebunan':
-        return Cesium.Color.fromCssColorString('#6d4c41').withAlpha(0.65); // Coklat Tua
+        return Cesium.Color.fromCssColorString('#3e2723').withAlpha(0.65);
       case 'ladang':
-        return Cesium.Color.fromCssColorString('#ffeb3b').withAlpha(0.65); // Kuning Cerah
-      case 'sawah': // Diperbarui dari 'sawah dengan padi diselingi tanaman lain' dan 'sawah dengan padi terus-menerus'
-        return Cesium.Color.fromCssColorString('#43a047').withAlpha(0.65); // Hijau Tua (representasi sawah umum)
+        return Cesium.Color.fromCssColorString('#ffeb3b').withAlpha(0.65);
+      case 'sawah': //
+        return Cesium.Color.fromCssColorString('#43a047').withAlpha(0.65);
       case 'semak belukar':
-        return Cesium.Color.fromCssColorString('#a1887f').withAlpha(0.65); // Coklat Keabu-abuan
+        return Cesium.Color.fromCssColorString('#bc8a5d').withAlpha(0.65);
       case 'sungai':
-        return Cesium.Color.fromCssColorString('#2196f3').withAlpha(0.7); // Biru Cerah
+        return Cesium.Color.fromCssColorString('#2196f3').withAlpha(0.7);
       case 'jalan': // Menambahkan 'jalan'
-        return Cesium.Color.fromCssColorString('#757575').withAlpha(0.8); // Abu-abu Tua untuk jalan
+        return Cesium.Color.fromCssColorString('#757575').withAlpha(0.8);
       default:
-        return Cesium.Color.fromCssColorString('#e0e0e0').withAlpha(0.4); // Abu-abu Muda untuk default/tidak diketahui
+        return Cesium.Color.fromCssColorString('#e0e0e0').withAlpha(0.4);
     }
   };
 

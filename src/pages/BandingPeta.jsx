@@ -20,15 +20,16 @@ const zntLegendClasses = [
 
 const plLegendClasses = [
     { label: "Pemukiman", color: "#c62828" },
-    { label: "Perkebunan", color: "#6d4c41" },
+    { label: "Perkebunan", color: "#3e2723" },
     { label: "Ladang", color: "#ffeb3b" },
     { label: "Sawah", color: "#43a047" },
-    { label: "Semak Belukar", color: "#a1887f" },
+    { label: "Semak Belukar", color: "#bc8a5d" },
     { label: "Sungai", color: "#2196f3" },
     { label: "Jalan", color: "#757575" },
 ];
 
 const getColorByHarga = (Harga) => {
+    if (Harga === 0) return '#ffeb3b';
     if (Harga <= 100000) return '#ffffb2';
     if (Harga <= 200000) return '#fed976';
     if (Harga <= 500000) return '#feb24c';
@@ -41,10 +42,10 @@ const getColorByHarga = (Harga) => {
 const getColorByfungsi = (fungsi) => {
     switch (fungsi?.toLowerCase()) {
         case 'pemukiman': return '#c62828';
-        case 'perkebunan': return '#6d4c41';
+        case 'perkebunan': return '#3e2723';
         case 'ladang': return '#ffeb3b';
         case 'sawah': return '#43a047';
-        case 'semak belukar': return '#a1887f';
+        case 'semak belukar': return '#bc8a5d';
         case 'sungai': return '#2196f3';
         case 'jalan': return '#757575';
         default: return '#e0e0e0';
