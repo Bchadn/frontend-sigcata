@@ -159,7 +159,7 @@ function Peta() {
 
       try {
         const options = {
-          defaultResetView: Cesium.Cartographic.fromDegrees(110.4203, -7.0, 15000),
+          defaultResetView: Cesium.Cartographic.fromDegrees(110.294605697, -7.10350522, 15000),
           enableCompass: true,
           enableZoomControls: true,
           enableDistanceLegend: true,

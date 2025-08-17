@@ -30,12 +30,6 @@
   top: 15px;
 }
 
-@media print {
-  .distance-legend {
-    display: none;
-  }
-}
-
 @media screen and (max-width: 700px) {
   .cesium-viewer .navigation-controls {
     bottom: 60px;
