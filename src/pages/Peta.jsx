@@ -150,34 +150,7 @@ function Peta() {
   }, []);
 
   // Efek samping untuk pengaturan awal Cesium Viewer(jika error)
-  useEffect(() => {
-    const viewer = viewerRef.current?.cesiumElement;
-    if (!viewer) {
-      console.warn("Viewer belum siap saat useEffect pertama jalan");
-      return;
-    }
 
-    const timer = setTimeout(() => {
-      try {
-        const options = {
-          defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0, 15000),
-          enableCompass: true,
-          enableZoomControls: true,
-          enableDistanceLegend: true,
-          enableCompassOuterRing: true,
-        };
-
-        new CesiumNavigation(viewer, options);
-
-        const navEl = viewer.container.querySelector(".cesium-navigation");
-        console.log("Navigation element:", navEl);
-      } catch (err) {
-        console.error("Gagal menambahkan CesiumNavigation:", err);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, []);
 
 
   // Efek samping untuk mengelola layer Foto Udara
@@ -674,20 +647,7 @@ function Peta() {
           animation={false}
           fullscreenButton={true}
           onReady={(viewer) => {
-            try {
-              const options = {
-                defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0, 15000),
-                enableCompass: true,
-                enableZoomControls: true,
-                enableDistanceLegend: true,
-                enableCompassOuterRing: true,
-              };
-
-              new CesiumNavigation(viewer, options);
-              console.log("✅ CesiumNavigation berhasil ditambahkan via onReady");
-            } catch (err) {
-              console.error("❌ Gagal menambahkan CesiumNavigation:", err);
-            }
+            console.log("✅ Viewer siap:", viewer);
           }}
         >
           {/* Render Batas Administrasi GeoJSON */}
