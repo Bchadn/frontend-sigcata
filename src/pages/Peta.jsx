@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Viewer, GeoJsonDataSource } from 'resium';
 import * as Cesium from 'cesium';
 import CesiumNavigation from "cesium-navigation-es6";
-import "../styles/cesium-navigation.css";
+import "cesium-navigation-es6/dist/styles/cesium-navigation.css";
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 import '../styles/StylePeta.css';
 import '../styles/StyleApp.css';
@@ -155,18 +155,20 @@ function Peta() {
     if (!viewer) return;
 
     //Navigasi tambahan Cesium
-    new CesiumNavigation(viewer, {
-      enableCompass: true,
-      enableZoomControls: true,
-      enableDistanceLegend: true,
-      enableCompassOuterRing: true,
-      defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0000, 15000),
-      resetTooltip: "Reset view", // contoh tambahan
-    });
+    const timer = setTimeout(() => {
+      new CesiumNavigation(viewer, {
+        enableCompass: true,
+        enableZoomControls: true,
+        enableDistanceLegend: true,
+        enableCompassOuterRing: true,
+        defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0000, 15000),
+        resetTooltip: "Reset view",
+      });
 
-    // cek apakah elemen navigasi muncul
-    const navEl = viewer.container.querySelector(".cesium-navigation");
-    console.log("CesiumNavigation element:", navEl);
+      // cek apakah elemen navigasi muncul
+      const navEl = viewer.container.querySelector(".cesium-navigation");
+      console.log("CesiumNavigation element:", navEl);
+    }, 300);
 
     const loadInitialSetup = async () => {
       try {
