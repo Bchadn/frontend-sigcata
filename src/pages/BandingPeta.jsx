@@ -130,12 +130,12 @@ const MapboxCompareComponent = () => {
             maps.current.leftMap.addControl(new mapboxgl.ScaleControl({
                 maxWidth: 200,
                 unit: 'metric'
-            }), 'bottom-left');
+            }), 'top-left');
 
             maps.current.rightMap.addControl(new mapboxgl.ScaleControl({
                 maxWidth: 200,
                 unit: 'metric'
-            }), 'bottom-right');
+            }), 'top-right');
 
             maps.current.compare = new MapboxCompare(
                 maps.current.leftMap,
