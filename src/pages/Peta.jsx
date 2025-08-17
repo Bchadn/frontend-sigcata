@@ -661,10 +661,10 @@ function Peta() {
           ref={viewerRef}
           className="map"
           full
-          baseLayerPicker={false}
-          geocoder={false}
+          baseLayerPicker={true}
+          geocoder={true}
           homeButton={false}
-          navigationHelpButton={false}
+          navigationHelpButton={true}
           sceneModePicker={true}
           timeline={false}
           animation={false}

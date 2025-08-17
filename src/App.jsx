@@ -1,4 +1,4 @@
-import {Routes,Route} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import './styles/StyleApp.css';
@@ -13,12 +13,12 @@ function App() {
     <div>
       <Navbar />
 
-      <Routes> 
+      <Routes>
         <Route path="/Beranda" element={<Beranda />} />
         <Route path="/Peta" element={<Peta />} />
         <Route path="/BandingPeta" element={<BandingPeta />} />
         <Route path="/Tentang" element={<Tentangkami />} />
-        <Route path="/" element={<Beranda />} />
+        <Route path="/" element={<Navigate to="/Beranda" replace />} />
       </Routes>
 
       <Footer />
