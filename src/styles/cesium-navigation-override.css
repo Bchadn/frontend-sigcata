@@ -1,0 +1,40 @@
+/* ===============================
+   Override Navigasi Cesium
+   =============================== */
+
+/* Default (desktop) → tetap di kanan atas */
+.cesium-viewer .navigation-controls,
+.cesium-viewer .compass {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  z-index: 9999 !important;
+}
+
+/* Mobile (≤ 700px) → pindah ke kanan bawah */
+@media screen and (max-width: 700px) {
+  .cesium-viewer .navigation-controls {
+    top: auto !important;
+    bottom: 20px !important;
+    right: 10px !important;
+  }
+
+  .cesium-viewer .compass {
+    top: auto !important;
+    bottom: 100px !important;
+    right: 10px !important;
+  }
+}
+
+/* Tablet landscape (≤ 1024px) → agak turun supaya tidak tabrakan UI lain */
+@media screen and (min-width: 701px) and (max-width: 1024px) {
+  .cesium-viewer .navigation-controls {
+    top: 60px !important;
+    right: 10px !important;
+  }
+
+  .cesium-viewer .compass {
+    top: 140px !important;
+    right: 10px !important;
+  }
+}
