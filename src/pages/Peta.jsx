@@ -152,6 +152,20 @@ function Peta() {
     const viewer = viewerRef.current?.cesiumElement;
     if (!viewer) return;
 
+    // Navigasi tambahan Cesium
+    CesiumNavigation(viewer, {
+      enableCompass: true,
+      enableZoomControls: true,
+      enableDistanceLegend: true,
+      enableCompassOuterRing: true,
+      defaultResetView: Cesium.Cartesian3.fromDegrees(110.4203, -7.0000, 15000),
+      navigationOptions: {
+        compass: { position: "bottom-right" },
+        zoomControls: { position: "bottom-right" },
+        distanceLegend: { position: "bottom-left" },
+      },
+    });
+
     const loadInitialSetup = async () => {
       try {
         const terrain = await Cesium.CesiumTerrainProvider.fromIonAssetId(1);
