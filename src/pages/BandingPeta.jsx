@@ -29,7 +29,7 @@ const plLegendClasses = [
 ];
 
 const getColorByHarga = (Harga) => {
-    if (Harga === 0) return '#ffeb3b';
+    if (Harga === 0) return '#00FF00';
     if (Harga <= 100000) return '#ffffb2';
     if (Harga <= 200000) return '#fed976';
     if (Harga <= 500000) return '#feb24c';

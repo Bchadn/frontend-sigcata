@@ -432,14 +432,14 @@ function Peta() {
 
   // Fungsi pembantu untuk menentukan warna berdasarkan keterangan Zona Awal
   const getColorByKeterangan = (keterangan) => {
-    if (keterangan === "LP2B") return Cesium.Color.fromCssColorString('#ffeb3b');
+    if (keterangan === "LP2B") return Cesium.Color.fromCssColorString('#00FF00');
     if (keterangan === "Non LP2B") return Cesium.Color.fromCssColorString('#e31a1c');
     return Cesium.Color.fromCssColorString('#b0b0b0');
   };
 
   // Fungsi pembantu untuk menentukan warna berdasarkan harga ZNT
   const getColorByHarga = (Harga) => {
-    if (Harga === 0) return Cesium.Color.fromCssColorString('#ffeb3b');
+    if (Harga === 0) return Cesium.Color.fromCssColorString('#00FF00');
     if (Harga <= 100000) return Cesium.Color.fromCssColorString('#ffffb2');
     if (Harga <= 200000) return Cesium.Color.fromCssColorString('#fed976');
     if (Harga <= 500000) return Cesium.Color.fromCssColorString('#feb24c');
