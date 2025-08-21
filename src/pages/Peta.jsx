@@ -367,7 +367,7 @@ function Peta() {
           position: pickedFeature.boundingSphere?.center,
           point: new Cesium.PointGraphics({
             pixelSize: 10,
-            color: Cesium.Color.YELLOW.withAlpha(0.8),
+            color: Cesium.Color.RED.withAlpha(0.8),
             outlineColor: Cesium.Color.WHITE,
             outlineWidth: 1,
             heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
@@ -741,7 +741,7 @@ function Peta() {
                   if (entity.position) {
                     entity.point = new Cesium.PointGraphics({
                       pixelSize: 10,
-                      color: Cesium.Color.RED.withAlpha(0.8),
+                      color: Cesium.Color.YELLOW.withAlpha(0.8),
                       outlineColor: Cesium.Color.WHITE,
                       outlineWidth: 1,
                       heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
