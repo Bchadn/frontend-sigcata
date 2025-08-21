@@ -18,7 +18,7 @@ function Beranda() {
             </p>
 
             <p>
-              Wilayah studi mencakup dua desa, yakni Desa Campurejo dan Desa Tampingan, yang terletak di Kecamatan Boja, Kabupaten Kendal, Provinsi Jawa Tengah. Desa Campurejo berjarak sekitar 3 km dari pusat Kecamatan Boja dan 32 km dari Ibu Kota Kabupaten Kendal. Desa ini memiliki luas wilayah 3.272 hektar dan dihuni oleh 8.226 jiwa. Sementara itu, Desa Tampingan terletak di bagian selatan Kecamatan Boja, sekitar 27 km dari Ibu Kota Kabupaten Kendal, dengan luas wilayah 193,64 hektar. Desa ini memiliki potensi lahan produktif yang didominasi oleh area persawahan. Kedua desa ini ditampilkan melalui tampilan peta interaktif dan visualisasi 3D bangunan, sehingga pengguna dapat memperoleh gambaran menyeluruh mengenai perubahan yang terjadi di wilayah studi ini.
+              Wilayah studi mencakup dua desa, yakni Desa Campurejo dan Desa Tampingan, yang terletak di Kecamatan Boja, Kabupaten Kendal, Provinsi Jawa Tengah. Desa Campurejo berjarak sekitar 3 km dari pusat Kecamatan Boja dan 32 km dari Ibu Kota Kabupaten Kendal. Desa ini memiliki luas wilayah 327 hektar dan dihuni oleh 8.226 jiwa. Sementara itu, Desa Tampingan terletak di bagian selatan Kecamatan Boja, sekitar 27 km dari Ibu Kota Kabupaten Kendal, dengan luas wilayah 194 hektar. Desa ini memiliki potensi lahan produktif yang didominasi oleh area persawahan. Kedua desa ini ditampilkan melalui tampilan peta interaktif dan visualisasi 3D bangunan, sehingga pengguna dapat memperoleh gambaran menyeluruh mengenai perubahan yang terjadi di wilayah studi ini.
             </p>
           </div>
 
